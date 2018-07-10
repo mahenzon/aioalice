@@ -1,5 +1,4 @@
 from attr import attrs, attrib
-# from attr.validators import instance_of as an
 from . import AliceObject, Meta, Session, Request, Response, AliceResponse
 from aioalice.utils import ensure_cls
 
@@ -8,9 +7,6 @@ from aioalice.utils import ensure_cls
 class AliceRequest(AliceObject):
     """AliceRequest is a request from Alice API"""
 
-    # meta = attrib(validator=an(Meta))
-    # request = attrib(validator=an(Request))
-    # session = attrib(validator=an(Session))
     meta = attrib(convert=ensure_cls(Meta))
     request = attrib(convert=ensure_cls(Request))
     session = attrib(convert=ensure_cls(Session))
