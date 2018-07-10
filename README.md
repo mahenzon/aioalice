@@ -19,3 +19,8 @@ pip install git+https://github.com/surik00/aioalice.git
 # 3. run:
 python setup.py install
 ```
+
+
+### JSON serializing
+
+If you want to use a faster json library, install [rapidjson](https://github.com/python-rapidjson/python-rapidjson) or [ujson](https://github.com/esnme/ultrajson), it will be detected and used automatically
