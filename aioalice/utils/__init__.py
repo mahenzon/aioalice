@@ -1,3 +1,6 @@
+from .json import json
+
+
 def ensure_cls(klass):
     def converter(val):
         if isinstance(val, dict):
