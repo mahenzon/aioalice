@@ -1,5 +1,4 @@
 import re
-import asyncio
 import inspect
 import logging
 
@@ -33,9 +32,9 @@ async def check_filters(filters, args):
     :return:
     """
     if filters is not None:
-        for filter_ in filters:
-            f = await check_filter(filter_, args)
-            if not f:
+        for f in filters:
+            filter_result = await check_filter(f, args)
+            if not filter_result:
                 return False
     return True
 
@@ -65,31 +64,6 @@ class AsyncFilter(Filter):
 
     async def check(self, *args, **kwargs):
         raise NotImplementedError
-
-
-# class AnyFilter(AsyncFilter):
-#     """
-#     One filter from many
-#     """
-
-#     def __init__(self, *filters: callable):
-#         self.filters = filters
-
-#     async def check(self, *args):
-#         f = (check_filter(filter_, args) for filter_ in self.filters)
-#         return any(await asyncio.gather(*f))
-
-
-# class NotFilter(AsyncFilter):
-#     """
-#     Reverse filter
-#     """
-
-#     def __init__(self, filter_: callable):
-#         self.filter = filter_
-
-#     async def check(self, *args):
-#         return not await check_filter(self.filter, args)
 
 
 class StringCompareFilter(AsyncFilter):
