@@ -1,7 +1,3 @@
-# import datetime
-
-from . import json
-
 DEFAULT_FILTER = ['self', 'cls']
 
 
@@ -35,20 +31,3 @@ def _normalize(obj):
     elif hasattr(obj, 'to_json'):
         return obj.to_json()
     return obj
-
-
-# def _prepare_arg(value):
-#     """
-#     Stringify dicts/lists and convert datetime/timedelta to unix-time
-
-#     :param value:
-#     :return:
-#     """
-#     if isinstance(value, (list, dict)) or hasattr(value, 'to_json'):
-#         return json.dumps(_normalize(value))
-#     # elif isinstance(value, datetime.datetime):
-#     #     return round(value.timestamp())
-#     # elif isinstance(value, datetime.timedelta):
-#     #     now = datetime.datetime.now()
-#     #     return int((now + value).timestamp())
-#     return value

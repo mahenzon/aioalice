@@ -1,6 +1,6 @@
 import asyncio
 
-# from .dispatcher import Dispatcher
+from .dispatcher import Dispatcher
 
 try:
     import uvloop

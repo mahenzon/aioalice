@@ -153,7 +153,7 @@ def generate_default_filters(dispatcher, *args, **kwargs):
     """
     Prepare filters
 
-    :param dispatcher:
+    :param dispatcher: for states
     :param args:
     :param kwargs:
     :return:
@@ -161,6 +161,8 @@ def generate_default_filters(dispatcher, *args, **kwargs):
     filters_list = []
 
     for name, filter_data in kwargs.items():
+        if filter_data is None:
+            continue  # skip not setted filter names
         # if filter_data is None and name != DefaultFilters.STATE:
         #     continue
         # TODO: states
