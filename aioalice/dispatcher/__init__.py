@@ -1,3 +1,4 @@
+import asyncio
 # import logging
 
 from .handler import Handler
@@ -10,9 +11,10 @@ from ..types.request import RequestType
 
 class Dispatcher:
 
-    def __init__(self, storage=None):
+    def __init__(self, loop=None, storage=None):
         # TODO: inculde default handler for 'test' commands
         # TODO: create default handler for exceptions handler
+        self.loop = loop or asyncio.get_event_loop()
         self.storage = storage or DisabledStorage()
         self.requests_handlers = Handler()
         self.errors_handlers = Handler()
