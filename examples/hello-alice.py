@@ -1,5 +1,3 @@
-import logging
-
 from aiohttp import web
 from aioalice import Dispatcher, get_new_configured_app
 
@@ -8,10 +6,6 @@ WEBHOOK_URL_PATH = '/my-alice-webhook/'  # webhook endpoint
 
 WEBAPP_HOST = 'localhost'
 WEBAPP_PORT = 3001
-
-
-logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
-                    level=logging.INFO)
 
 dp = Dispatcher()
 

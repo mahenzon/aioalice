@@ -14,6 +14,8 @@ DEFAULT_ERROR_RESPONSE_TEXT = 'Server error. Developer has to check logs.'
 # with server on Aruba (Italy) 1.2s is a critical timeout for whole processing
 # NOTE that this timeout can help only if using non-blocking IO
 # in e.g use asyncio.sleep instead of time.sleep, aiohttp instead of requests, etc
+# Whole processing usually takes from 0.0004 до 0.001 (depends on system IO),
+# but Yandex starts countdown as user asks a question, request processing takes some time
 RESPONSE_TIMEOUT = 1.2
 
 

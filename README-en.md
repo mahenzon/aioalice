@@ -25,9 +25,9 @@ source ./aliceenv/bin/activate
 
 pip install pip -U
 pip install setuptools -U
-pip install uvloop  # uvloop recommended
+pip install uvloop  # uvloop if you want
 
-pip install git+https://github.com/surik00/aioalice.git
+pip install git+https://github.com/surik00/aioalice.git -U
 
 # or if you don't have git installed:
 # 1. download ZIP

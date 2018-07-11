@@ -23,7 +23,7 @@ class Dispatcher:
         try:
             return await self.requests_handlers.notify(request)
         except Exception as e:
-            result = await self.errors_handlers.notify(self, request, e)
+            result = await self.errors_handlers.notify(request, e)
             if result:
                 return result
             raise
