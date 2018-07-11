@@ -23,9 +23,9 @@ class Dispatcher:
         try:
             return await self.requests_handlers.notify(request)
         except Exception as e:
-            err = await self.errors_handlers.notify(self, request, e)
-            if err:
-                return err
+            result = await self.errors_handlers.notify(self, request, e)
+            if result:
+                return result
             raise
 
     def register_request_handler(self, callback, *, commands=None, contains=None, starts_with=None, request_type=None,
@@ -47,8 +47,6 @@ class Dispatcher:
         :param custom_filters: list of custom filters
         :param kwargs:
         """
-        if request_type is None:
-            request_type = RequestType.all()
         if custom_filters is None:
             custom_filters = []
 

@@ -24,10 +24,10 @@ def _normalize(obj):
     :param obj:
     :return: normalized object
     """
-    if isinstance(obj, list):
-        return [_normalize(item) for item in obj]
-    elif isinstance(obj, dict):
+    if isinstance(obj, dict):
         return {k: _normalize(v) for k, v in obj.items() if v is not None}
-    elif hasattr(obj, 'to_json'):
-        return obj.to_json()
+    # elif hasattr(obj, 'to_json'):
+    #     return _normalize(obj.to_json())
+    elif isinstance(obj, list):
+        return [_normalize(item) for item in obj]
     return obj
