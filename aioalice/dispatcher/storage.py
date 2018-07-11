@@ -1,6 +1,10 @@
 import logging
 
-log = logging.getLogger(__name__)
+# This state will be default instead of `None` to gain maximum speed
+# So if handler is registered with `state=None`,
+# no State filter will be applied by default
+# use `DEFAULT_STATE` for FSM, else no state check will be applied
+DEFAULT_STATE = 'DEFAULT_STATE'
 
 
 class BaseStorage:
@@ -29,7 +33,7 @@ class BaseStorage:
     async def get_state(self, user_id):
         """
         Get current state of user.
-        Default is `None`
+        Default is `DEFAULT_STATE`
 
         :param user_id:
         :param default:
@@ -97,7 +101,7 @@ class BaseStorage:
         :param with_data:
         :return:
         """
-        await self.set_state(user_id, state=None)
+        await self.set_state(user_id, state=DEFAULT_STATE)
         if with_data:
             await self.reset_data(user_id)
 
@@ -123,7 +127,7 @@ class DisabledStorage(BaseStorage):
         pass
 
     async def get_state(self, user_id):
-        return None
+        return DEFAULT_STATE
 
     async def get_data(self, user_id):
         self._warn()
@@ -140,8 +144,8 @@ class DisabledStorage(BaseStorage):
 
     @staticmethod
     def _warn():
-        log.warning("You haven’t set any storage yet so no states and no data will be saved.\n"
-                    "You can connect MemoryStorage for debug purposes or non-essential data.")
+        logging.warning("You haven’t set any storage yet so no states and no data will be saved.\n"
+                        "You can connect MemoryStorage for debug purposes or non-essential data.")
 
 
 class MemoryStorage(BaseStorage):
@@ -158,7 +162,7 @@ class MemoryStorage(BaseStorage):
 
     def _get_user_data(self, user_id):
         if user_id not in self.data:
-            self.data[user_id] = {'state': None, 'data': {}}
+            self.data[user_id] = {'state': DEFAULT_STATE, 'data': {}}
         return self.data[user_id]
 
     async def get_state(self, user_id):
