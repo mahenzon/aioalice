@@ -109,6 +109,28 @@ class CommandsFilter(AsyncFilter):
         return command in self.commands
 
 
+class StateFilter(AsyncFilter):
+    """Check user's state"""
+
+    def __init__(self, dispatcher, state):
+        self.dispatcher = dispatcher
+        self.state = state
+
+    async def check(self, areq):
+        if self.state == '*':
+            return True
+        user_state = self.dispatcher.storage.get_state(areq.session.user_id)
+        return user_state == self.state
+
+
+class StatesListFilter(StateFilter):
+    """Check if user's state is in list of states"""
+
+    async def check(self, areq):
+        user_state = self.dispatcher.storage.get_state(areq.session.user_id)
+        return user_state in self.state
+
+
 class RegexpFilter(Filter):
     """
     Regexp filter for original_utterance (full request text)
@@ -162,10 +184,11 @@ def generate_default_filters(dispatcher, *args, **kwargs):
 
     for name, filter_data in kwargs.items():
         if filter_data is None:
-            continue  # skip not setted filter names
-        # if filter_data is None and name != DefaultFilters.STATE:
-        #     continue
-        # TODO: states
+            # skip not setted filter names
+            # Note that state by default is not None,
+            # check dispatcher.storage for more information
+            continue
+
         if name == DefaultFilters.REQUEST_TYPE:
             filters_list.append(RequestTypeFilter(filter_data))
         elif name == DefaultFilters.COMMANDS:
@@ -183,6 +206,11 @@ def generate_default_filters(dispatcher, *args, **kwargs):
                 filters_list.append(ContainsFilter([filter_data]))
             else:
                 filters_list.append(ContainsFilter(filter_data))
+        elif name == DefaultFilters.STATE:
+            if isinstance(filter_data, (list, set, tuple, frozenset)):
+                filters_list.append(StatesListFilter(dispatcher, filter_data))
+            else:
+                filters_list.append(StateFilter(dispatcher, filter_data))
         elif name == DefaultFilters.FUNC:
             filters_list.append(filter_data)
         elif name == DefaultFilters.REGEXP:
@@ -206,4 +234,5 @@ class DefaultFilters(Helper):
     CONTAINS = Item()  # contains
     COMMANDS = Item()  # commands
     REGEXP = Item()  # regexp
+    STATE = Item()  # state
     FUNC = Item()  # func
