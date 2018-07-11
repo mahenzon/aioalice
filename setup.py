@@ -16,7 +16,7 @@ MINIMAL_PY_VERSION = (3, 6)
 if sys.version_info < MINIMAL_PY_VERSION:
     raise RuntimeError('aioalice works only with Python {}+'.format('.'.join(map(str, MINIMAL_PY_VERSION))))
 
-__version__ = '0.1.0'
+__version__ = '1.0.0'
 
 
 def get_description():
