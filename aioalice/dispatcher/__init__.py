@@ -2,10 +2,10 @@ import asyncio
 # import logging
 
 from .handler import Handler
-from .storage import DisabledStorage
+from .storage import BaseStorage, DisabledStorage
 from .filters import generate_default_filters, ExceptionsFilter
 
-from ..types.request import RequestType
+# from ..types.request import RequestType
 # log = logging.getLogger(__name__)
 
 

@@ -138,5 +138,5 @@ class DisabledStorage(BaseStorage):
 
     @staticmethod
     def _warn():
-        log.warning(f"You haven’t set any storage yet so no states and no data will be saved.\n"
-                    f"You can connect MemoryStorage for debug purposes or non-essential data.")
+        log.warning("You haven’t set any storage yet so no states and no data will be saved.\n"
+                    "You can connect MemoryStorage for debug purposes or non-essential data.")
