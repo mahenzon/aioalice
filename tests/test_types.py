@@ -133,6 +133,25 @@ class TestAliceTypes(unittest.TestCase):
         response = types.Response(**response_json)
         self._test_response(response, response_json)
 
+        resp_text = 'Response Text'
+        response = types.Response(resp_text, buttons=['Hi!'])
+        self.assertEqual(
+            response.to_json(),
+            {
+                'text': resp_text,
+                'tts': None,
+                'buttons': [
+                    {
+                        'title': 'Hi!',
+                        'url': None,
+                        'payload': None,
+                        'hide': True
+                    }
+                ],
+                'end_session': False
+            }
+        )
+
     def _test_alice_request(self, arq, dct):
         self.assertEqual(arq.version, dct['version'])
         self._test_session(arq.session, dct['session'])
