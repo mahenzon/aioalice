@@ -1,26 +1,42 @@
-# aioalice
+<p align="center">
+    Русский | <a href="README-en.md">English</a>
+</p>
 
-## AsyncIO library for Yandex Alice (Yandex Dialogs) 
+# Яндекс Алиса. Диалоги (навыки)
 
 
-### Installation
+**aioalice** это асинхронная библиотека для взаимодействия с Алисой
+
+
+## Зачем?
+- Работайте с привычными классами, а не зайнимайтесь парсингом JSON'а
+- Автоматический ответ в вебхук, даже если вы не успели подготовить ответ вовремя - навык не вернет ошибку сервера, но запишет вам лог
+> Автоматический ответ сработает только при использовании async IO. Если затянется обработка в каком-то цикле или др. синхронное вычисление, это не поможет
+- Удобные хэндлеры - будет вызван обработчик, соответствующий полученной команде
+- Работа с состояниями
+
+
+### Установка
 
 ```bash
-# make sure you use virtual env and python 3.6+:
+# рекомендуется использовать virtual env и python 3.6+:
 python3.6 -m venv aliceenv
 source ./aliceenv/bin/activate
 
+pip install pip -U
+pip install setuptools -U
+pip install uvloop  # uvloop рекомендуется
 
 pip install git+https://github.com/surik00/aioalice.git
 
-# or if you don't have git installed:
-# 1. download ZIP
-# 2. unarchive and go to dir
-# 3. run:
+# Если git не установлен:
+# 1. скачайте ZIP
+# 2. разархивируйте и перейдите в папку
+# 3. выполните следующую команду:
 python setup.py install
 ```
 
 
 ### JSON serializing
 
-If you want to use a faster json library, install [rapidjson](https://github.com/python-rapidjson/python-rapidjson) or [ujson](https://github.com/esnme/ultrajson), it will be detected and used automatically
+Если вы хотите использовать более быструю библиотеку для работы с JSON, установите [rapidjson](https://github.com/python-rapidjson/python-rapidjson) или [ujson](https://github.com/esnme/ultrajson). Библиотека определится и будет использована автоматически.
