@@ -1,6 +1,7 @@
 import asyncio
 
 from .dispatcher import Dispatcher
+from .dispatcher.webhook import get_new_configured_app, configure_app
 
 try:
     import uvloop

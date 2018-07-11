@@ -48,7 +48,8 @@ class Handler:
 
         :param args:
         :return: instance of AliceResponse
-            "You *have* to return something to answer to API"
+            You *have* to return something to answer to API
+            Consider returning AliceResponse or prepared JSON
         """
 
         for filters, handler in self.handlers:
