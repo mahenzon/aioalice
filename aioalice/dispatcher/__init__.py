@@ -2,7 +2,7 @@ import asyncio
 # import logging
 
 from .handler import Handler
-from .storage import BaseStorage, DisabledStorage
+from .storage import DisabledStorage, MemoryStorage
 from .filters import generate_default_filters, ExceptionsFilter
 
 # from ..types.request import RequestType

@@ -119,7 +119,7 @@ class StateFilter(AsyncFilter):
     async def check(self, areq):
         if self.state == '*':
             return True
-        user_state = self.dispatcher.storage.get_state(areq.session.user_id)
+        user_state = await self.dispatcher.storage.get_state(areq.session.user_id)
         return user_state == self.state
 
 
@@ -127,7 +127,7 @@ class StatesListFilter(StateFilter):
     """Check if user's state is in list of states"""
 
     async def check(self, areq):
-        user_state = self.dispatcher.storage.get_state(areq.session.user_id)
+        user_state = await self.dispatcher.storage.get_state(areq.session.user_id)
         return user_state in self.state
 
 

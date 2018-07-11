@@ -136,7 +136,8 @@ class WebhookRequestHandler(web.View):
         if isinstance(result, AliceResponse):
             return generate_json_payload(**result.to_json())
         if result is None:
-            logging.critical('Got `None` instead of a response! Generating default error response')
+            logging.critical('Got `None` instead of a response!\n'
+                             f'Generating default error response based on {request}')
             return self.default_error_response(request)
         if not isinstance(result, dict):
             # If result is not a dict, it may cause an error. Warn developer
