@@ -7,9 +7,9 @@ from . import AliceObject, Markup
 @attrs
 class Request(AliceObject):
     """Request object"""
-    command = attrib(type=str)
-    original_utterance = attrib(type=str)
     type = attrib(type=str)
+    command = attrib(default='', type=str)  # Can be none if payload passed
+    original_utterance = attrib(default='', type=str)  # Can be none if payload passed
     markup = attrib(default=None)
     payload = attrib(default=None)
 
