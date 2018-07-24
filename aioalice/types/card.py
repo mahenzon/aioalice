@@ -35,6 +35,16 @@ class Card(AliceObject):
 
     @classmethod
     def big_image(cls, image_id, title, description, button, footer):
+        """
+        Generate Big Image card
+
+        :param image_id: Image's id for BigImage Card
+        :param title: Image's title for BigImage Card
+        :param description: Image's description for BigImage Card
+        :param button: Image's button for BigImage Card
+        :param footer: Card's footer
+        :return: Card
+        """
         return cls(
             CardType.BIG_IMAGE,
             image_id=image_id,
@@ -46,6 +56,14 @@ class Card(AliceObject):
 
     @classmethod
     def items_list(cls, header, items, footer):
+        """
+        Generate Items List card
+
+        :param header: Card's header
+        :param items: Card's items - list of `Image` objects
+        :param footer: Card's footer
+        :return: Card
+        """
         return cls(
             CardType.ITEMS_LIST,
             header=header,
