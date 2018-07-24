@@ -36,3 +36,7 @@ class NetworkError(DialogsAPIError):
 
 class Forbidden(DialogsAPIError, match='Forbidden'):
     '''Is thrown when Authorization failed (403)'''
+
+
+class ContentNotProvided(DialogsAPIError, match='URL or FILE is needed'):
+    '''Is thrown when no image is provided within request'''
