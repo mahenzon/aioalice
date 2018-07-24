@@ -1,5 +1,6 @@
 from attr import attrs, attrib
-from . import AliceObject, Meta, Session, Request, Response, AliceResponse
+from . import AliceObject, Meta, Session, \
+    Card, Request, Response, AliceResponse
 from aioalice.utils import ensure_cls
 
 
@@ -12,11 +13,52 @@ class AliceRequest(AliceObject):
     session = attrib(convert=ensure_cls(Session))
     version = attrib(type=str)
 
+    def _response(self, response):
+        return AliceResponse(
+            response=response,
+            session=self.session.base,
+            version=self.version
+        )
+
     def response(self, responose_or_text, **kwargs):
         if not isinstance(responose_or_text, Response):
             responose_or_text = Response(responose_or_text, **kwargs)
-        return AliceResponse(
-            response=responose_or_text,
-            session=self.session.base,
-            version=self.version,
+        return self._response(responose_or_text)
+
+    def response_big_image(self, text, image_id, title, description, button, footer, **kwargs):
+        """
+        Generate response with Big Image card
+
+        :param text: Response's text
+        :param image_id: Image's id for BigImage Card
+        :param title: Image's title for BigImage Card
+        :param description: Image's description for BigImage Card
+        :param button: Image's button for BigImage Card
+        :param footer: Card's footer
+        :param kwargs: tts, buttons, end_session for Response
+        :return: AliceResponse
+        """
+        return self._response(
+            Response(
+                text, **kwargs,
+                card=Card.big_image(image_id, title, description, button, footer),
+            )
+        )
+
+    def response_items_list(self, text, header, items, footer, **kwargs):
+        """
+        Generate response with Items List card
+
+        :param text: Response's text
+        :param header: Card's header
+        :param items: Card's items - list of `Image` objects
+        :param footer: Card's footer
+        :param kwargs: tts, buttons, end_session for Response
+        :return: AliceResponse
+        """
+        return self._response(
+            Response(
+                text, **kwargs,
+                card=Card.items_list(header, items, footer)
+            )
         )
