@@ -29,13 +29,15 @@ THIMBLE = '⚫'
 class GameStates(Helper):
     mode = HelperMode.snake_case
 
-    SELECT_GAME = Item()
-    GUESS_NUM = Item()
-    THIMBLES = Item()
+    SELECT_GAME = Item()  # = select_game
+    GUESS_NUM = Item()  # = guess_num
+    THIMBLES = Item()  # = thimbles
 
 
 def gen_thimbles():
     # Генерируем массив из 3 кнопок
+    # Первый аргумент - юникод символ черного кружочка
+    # Аргумент по ключевому слову payload может содержать произвольный JSON
     buttons = [types.Button(THIMBLE, payload={'win': False}) for _ in range(3)]
     # Делаем первую кнопку выигрышной
     buttons[0].payload['win'] = True
@@ -66,7 +68,8 @@ async def cancel_operation(alice_request):
     return alice_request.response('Хорошо, прекращаем.')
 
 
-# Создаем функцию обработчик команды, которая сработает, если отправлено число
+# Создаем функцию обработчик команды, которая сработает,
+# если во время игры в "угадай число" отправлено число
 async def user_guesses_number(alice_request):
     user_id = alice_request.session.user_id
     my_num = await get_number_from_data(user_id)
@@ -76,7 +79,11 @@ async def user_guesses_number(alice_request):
         await dp.storage.reset_state(user_id)
         text = 'Верно! Молодец!'
     else:
-        text = 'Нет, но ты близко! Пробуй ещё'
+        text = 'Нет, но ты близко! Пробуй ещё.\nЗагаданное число '
+        if my_num > num:
+            text += 'больше'
+        else:
+            text += 'меньше'
         buttons = ['Сдаюсь', 'Прекратить']
     return alice_request.response(text, buttons=buttons)
 
@@ -113,8 +120,13 @@ async def game_number_command_not_digit(alice_request):
 
 
 # Этот хэндлер сработает только если нажата кнопка во время игры в наперстки
+# Тип запроса "SimpleUtterance" это не только голосовой ввод,
+# но и нажатие кнопки без payload. "ButtonPressed" — нажатие кнопки с payload
 @dp.request_handler(state=GameStates.THIMBLES, request_type=types.RequestType.BUTTON_PRESSED)
 async def check_if_winning_button_pressed(alice_request):
+    # Не смотря на то, что данный тип запроса может быть только с payload
+    # проверяем, что он существует, вдруг изменится апи
+    # по умолчанию payload = None
     if alice_request.request.payload and alice_request.request.payload['win']:
         text = 'Верно! Ты молодец!'
     else:
@@ -124,7 +136,7 @@ async def check_if_winning_button_pressed(alice_request):
 
 
 # Отрабатываем, если во время игры в наперстки отправлен текст, а не нажата кнопка
-# Можео было бы сделать request_type=types.RequestType.SIMPLE_UTTERANCE,
+# Можно было бы сделать request_type=types.RequestType.SIMPLE_UTTERANCE,
 # но так как варианта всего два, а первый был бы отработан выше, то это не нужно
 @dp.request_handler(state=GameStates.THIMBLES)
 async def thimbles_not_button(alice_request):
@@ -135,8 +147,8 @@ async def thimbles_not_button(alice_request):
     )
 
 
-# Если состояние "SELECT_GAME" _ И _ при этом текст содержит
-# название одной из игр - хэндлер отработает
+# Если состояние "SELECT_GAME" (!) _И_ (!) при этом
+# текст содержит название одной из игр - хэндлер отработает
 @dp.request_handler(state=GameStates.SELECT_GAME, contains=GAMES_LIST)
 async def selecting_game(alice_request):
     user_id = alice_request.session.user_id
@@ -170,14 +182,14 @@ async def select_game_not_in_list(alice_request):
 
 # Приветствуем пользователя и предлагаем сыграть в игру
 # В этот хэндлер будут попадать любые команды,
-# не отработанные хэндлерами выше. "главное меню"
+# не отработанные хэндлерами выше. это - "главное меню"
 @dp.request_handler()
 async def handle_any_request(alice_request):
     user_id = alice_request.session.user_id
     # Устанавливаем состояние пользователя "выбор игры"
     await dp.storage.set_state(user_id, GameStates.SELECT_GAME)
 
-    text = 'Давай играть! Выбрери игру:'
+    text = 'Давай играть! Выбери игру:'
     # Если сессия новая, приветствуем пользователя
     if alice_request.session.new:
         text = 'Привет! ' + text

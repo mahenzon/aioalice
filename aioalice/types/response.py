@@ -1,5 +1,5 @@
 from attr import attrs, attrib
-from . import AliceObject, Button
+from . import AliceObject, Card, Button
 from aioalice.utils import ensure_cls
 
 
@@ -9,5 +9,6 @@ class Response(AliceObject):
 
     text = attrib(type=str)
     tts = attrib(default=None, type=str)
+    card = attrib(default=None, convert=ensure_cls(Card))
     buttons = attrib(default=None, convert=ensure_cls(Button))
     end_session = attrib(default=False, type=bool)

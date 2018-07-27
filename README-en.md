@@ -37,6 +37,19 @@ python setup.py install
 ```
 
 
+### Quick start
+
+[Hello alice](examples/hello-alice.py)
+
+```python
+dp = Dispatcher()
+
+@dp.request_handler()
+async def handle_all_requests(alice_request):
+    return alice_request.response('Hello world!')
+```
+
+
 ### JSON serializing
 
 If you want to use a faster json library, install [rapidjson](https://github.com/python-rapidjson/python-rapidjson) or [ujson](https://github.com/esnme/ultrajson), it will be detected and used automatically
