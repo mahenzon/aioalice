@@ -16,12 +16,12 @@ MINIMAL_PY_VERSION = (3, 6)
 if sys.version_info < MINIMAL_PY_VERSION:
     raise RuntimeError('aioalice works only with Python {}+'.format('.'.join(map(str, MINIMAL_PY_VERSION))))
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 
 def get_description():
     """
-    Read full description from 'README.rst'
+    Read full description from 'README.md'
 
     :return: description
     :rtype: str
@@ -32,7 +32,7 @@ def get_description():
 
 def get_requirements(filename=None):
     """
-    Read requirements from 'requirements txt'
+    Read requirements from 'requirements.txt'
 
     :return: requirements
     :rtype: list
@@ -49,7 +49,7 @@ def get_requirements(filename=None):
 setup(
     name='aioalice',
     version=__version__,
-    packages=find_packages(exclude=('tests', 'tests.*', 'examples.*', 'docs',)),
+    packages=find_packages(exclude=('tests', 'tests.*', 'examples',)),
     url='https://github.com/surik00/aioalice',
     license='MIT',
     author='Suren Khorenyan',
