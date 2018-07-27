@@ -37,6 +37,19 @@ python setup.py install
 ```
 
 
+### Быстрый старт
+
+[Пример простейшего навыка](examples/hello-alice.py)
+
+```python
+dp = Dispatcher()
+
+@dp.request_handler()
+async def handle_all_requests(alice_request):
+    return alice_request.response('Привет этому миру!')
+```
+
+
 ### JSON serializing
 
 Если вы хотите использовать более быструю библиотеку для работы с JSON, установите [rapidjson](https://github.com/python-rapidjson/python-rapidjson) или [ujson](https://github.com/esnme/ultrajson). Библиотека определится и будет использована автоматически.
