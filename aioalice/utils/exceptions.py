@@ -1,3 +1,7 @@
+class DialogsError(Exception):
+    '''Base class for alice exceptions'''
+
+
 class DialogsAPIError(Exception):
     '''Base Exception for API related requests'''
     __subclasses = []
@@ -20,6 +24,14 @@ class DialogsAPIError(Exception):
             if err.match in match:
                 raise err(description)
         raise cls(description)
+
+
+class AuthRequired(Exception):
+    '''Passed is skill_id of oauth_token is not provided'''
+
+
+class ApiChanged(DialogsError):
+    '''Is thrown if there are some unpredicted changes in API'''
 
 
 class NetworkError(DialogsAPIError):
