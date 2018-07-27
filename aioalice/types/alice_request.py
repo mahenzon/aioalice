@@ -21,6 +21,19 @@ class AliceRequest(AliceObject):
         )
 
     def response(self, responose_or_text, **kwargs):
+        """
+        Generate response
+
+        :param responose_or_text: Response or Response's text:
+            if responose_or_text is not an instance of Response,
+            it is passed to the Response initialisator with kwargs.
+            Otherwise it is used as a Response
+
+        :param kwargs: tts, card, buttons, end_session for Response
+            NOTE: if you want to pass card, concider using one of
+              these methods: response_big_image, response_items_list
+        :return: AliceResponse
+        """
         if not isinstance(responose_or_text, Response):
             responose_or_text = Response(responose_or_text, **kwargs)
         return self._response(responose_or_text)
