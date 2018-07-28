@@ -57,6 +57,9 @@ async def handle_all_requests(alice_request):
 - [Пример карточки с одним большим изображением](examples/card_big_image.py)
 - [Пример карточки с альбомом из нескольких изображений](examples/card_items_list.py)
 
+- [Все примеры](examples/README.md)
+
+
 ### JSON serializing
 
 Если вы хотите использовать более быструю библиотеку для работы с JSON, установите [rapidjson](https://github.com/python-rapidjson/python-rapidjson) или [ujson](https://github.com/esnme/ultrajson). Библиотека определится и будет использована автоматически.
