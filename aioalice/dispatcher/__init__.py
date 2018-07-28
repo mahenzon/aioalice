@@ -4,7 +4,7 @@ import asyncio
 
 from . import api
 from .handler import Handler
-from .storage import DisabledStorage, MemoryStorage
+from .storage import DisabledStorage, MemoryStorage, DEFAULT_STATE
 from .filters import generate_default_filters, ExceptionsFilter
 from ..utils import json, exceptions
 
@@ -58,7 +58,7 @@ class Dispatcher:
             raise
 
     def register_request_handler(self, callback, *, commands=None, contains=None, starts_with=None, request_type=None,
-                                 func=None, state=None, regexp=None, custom_filters=None, **kwargs):
+                                 func=None, state=DEFAULT_STATE, regexp=None, custom_filters=None, **kwargs):
         """
         Register handler for AliceRequest
 
@@ -93,7 +93,7 @@ class Dispatcher:
         self.requests_handlers.register(callback, prepared_filers)
 
     def request_handler(self, *custom_filters, commands=None, contains=None, starts_with=None,
-                        request_type=None, func=None, state=None, regexp=None, **kwargs):
+                        request_type=None, func=None, state=DEFAULT_STATE, regexp=None, **kwargs):
         """
         Decorator AliceRequest handler
 
