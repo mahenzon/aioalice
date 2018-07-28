@@ -164,18 +164,18 @@ class WebhookRequestHandler(web.View):
         return web.json_response(response, dumps=json.dumps)
 
 
-def configure_app(dispatcher, app: web.Application, path=DEFAULT_WEB_PATH,
+def configure_app(app, dispatcher, path=DEFAULT_WEB_PATH,
                   default_response_or_text=DEFAULT_ERROR_RESPONSE_TEXT):
     """
     You can prepare web.Application for working with webhook handler.
 
-    :param dispatcher: Dispatcher instance
     :param app: :class:`aiohttp.web.Application`
+    :param dispatcher: Dispatcher instance
     :param path: Path to your webhook.
     :default_response_or_text: `aioalice.types.Response` OR text to answer user on fail or timeout
     :return:
     """
-    app.on_shutdown.append(dispatcher.close)
+    app.on_shutdown.append(dispatcher.shutdown)
     app.router.add_route('*', path, WebhookRequestHandler, name='alice_webhook_handler')
     app[ALICE_DISPATCHER_KEY] = dispatcher
     # Prepare default Response
@@ -202,5 +202,5 @@ def get_new_configured_app(dispatcher, path=DEFAULT_WEB_PATH,
     :return:
     """
     app = web.Application()
-    configure_app(dispatcher, app, path, default_response_or_text)
+    configure_app(app, dispatcher, path, default_response_or_text)
     return app

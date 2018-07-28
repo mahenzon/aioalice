@@ -38,7 +38,7 @@ class AliceRequest(AliceObject):
             responose_or_text = Response(responose_or_text, **kwargs)
         return self._response(responose_or_text)
 
-    def response_big_image(self, text, image_id, title, description, button, footer, **kwargs):
+    def response_big_image(self, text, image_id, title, description, button=None, **kwargs):
         """
         Generate response with Big Image card
 
@@ -47,18 +47,17 @@ class AliceRequest(AliceObject):
         :param title: Image's title for BigImage Card
         :param description: Image's description for BigImage Card
         :param button: Image's button for BigImage Card
-        :param footer: Card's footer
         :param kwargs: tts, buttons, end_session for Response
         :return: AliceResponse
         """
         return self._response(
             Response(
                 text, **kwargs,
-                card=Card.big_image(image_id, title, description, button, footer),
+                card=Card.big_image(image_id, title, description, button),
             )
         )
 
-    def response_items_list(self, text, header, items, footer, **kwargs):
+    def response_items_list(self, text, header, items, footer=None, **kwargs):
         """
         Generate response with Items List card
 
