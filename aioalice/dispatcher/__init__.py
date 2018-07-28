@@ -45,6 +45,9 @@ class Dispatcher:
         if self.__session and not self.__session.closed:
             await self.__session.close()
 
+    async def shutdown(self, webapp):
+        await self.close()
+
     async def process_request(self, request):
         try:
             return await self.requests_handlers.notify(request)

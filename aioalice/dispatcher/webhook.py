@@ -175,7 +175,7 @@ def configure_app(dispatcher, app: web.Application, path=DEFAULT_WEB_PATH,
     :default_response_or_text: `aioalice.types.Response` OR text to answer user on fail or timeout
     :return:
     """
-    app.on_shutdown.append(dispatcher.close)
+    app.on_shutdown.append(dispatcher.shutdown)
     app.router.add_route('*', path, WebhookRequestHandler, name='alice_webhook_handler')
     app[ALICE_DISPATCHER_KEY] = dispatcher
     # Prepare default Response
