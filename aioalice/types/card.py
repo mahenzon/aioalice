@@ -34,7 +34,7 @@ class Card(AliceObject):
             raise ValueError(f'Card type must be "BigImage" or "ItemsList", not "{value}"')
 
     @classmethod
-    def big_image(cls, image_id, title, description, button=None, footer=None):
+    def big_image(cls, image_id, title, description, button=None):
         """
         Generate Big Image card
 
@@ -42,7 +42,6 @@ class Card(AliceObject):
         :param title: Image's title for BigImage Card
         :param description: Image's description for BigImage Card
         :param button: Image's button for BigImage Card
-        :param footer: Card's footer
         :return: Card
         """
         return cls(
@@ -51,7 +50,6 @@ class Card(AliceObject):
             title=title,
             description=description,
             button=button,
-            footer=footer
         )
 
     @classmethod
@@ -68,7 +66,7 @@ class Card(AliceObject):
             CardType.ITEMS_LIST,
             header=header,
             items=items,
-            footer=footer
+            footer=footer,
         )
 
 
