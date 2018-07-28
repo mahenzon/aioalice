@@ -14,6 +14,7 @@
 > Auto response will not help if you are not using async IO. So consider not to use any long processing synchronous tasks inside handlers
 - Handy handlers to match incoming commands
 - Finite-State Machine
+- Easy images upload, easy answers generation
 
 
 ### Installation
@@ -48,6 +49,13 @@ dp = Dispatcher()
 async def handle_all_requests(alice_request):
     return alice_request.response('Hello world!')
 ```
+
+
+### Cards
+
+- [Upload image example](examples/upload_image.py)
+- [Big Image Card example](examples/card_big_image.py)
+- [Items List Card example](examples/card_items_list.py)
 
 
 ### JSON serializing
