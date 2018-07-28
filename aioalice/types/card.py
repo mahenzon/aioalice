@@ -34,7 +34,7 @@ class Card(AliceObject):
             raise ValueError(f'Card type must be "BigImage" or "ItemsList", not "{value}"')
 
     @classmethod
-    def big_image(cls, image_id, title, description, button, footer):
+    def big_image(cls, image_id, title, description, button=None, footer=None):
         """
         Generate Big Image card
 
@@ -55,7 +55,7 @@ class Card(AliceObject):
         )
 
     @classmethod
-    def items_list(cls, header, items, footer):
+    def items_list(cls, header, items, footer=None):
         """
         Generate Items List card
 

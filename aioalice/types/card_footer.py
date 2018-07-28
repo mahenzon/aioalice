@@ -8,4 +8,4 @@ from aioalice.utils import ensure_cls
 class CardFooter(AliceObject):
     """This object represents a card's footer"""
     text = attrib(type=str)
-    button = attrib(convert=ensure_cls(MediaButton))
+    button = attrib(default=None, convert=ensure_cls(MediaButton))
