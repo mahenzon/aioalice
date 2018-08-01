@@ -5,6 +5,10 @@ from aiohttp import web
 from ..utils import json, generate_json_payload
 from ..types import AliceRequest, AliceResponse, Response
 
+
+log = logging.getLogger(__name__)
+
+
 DEFAULT_WEB_PATH = '/alicewh/'
 ALICE_DISPATCHER_KEY = 'ALICE_DISPATCHER'
 ERROR_RESPONSE_KEY = 'ALICE_ERROR_RESPONSE'
@@ -102,10 +106,10 @@ class WebhookRequestHandler(web.View):
             :param task:
             :return:
             """
-            logging.warning('Long request processing detected.\n'
-                            f'Request was {request}\n'
-                            f'You have to process request in {RESPONSE_TIMEOUT}s\n'
-                            'request was automatically responded with `ERROR_RESPONSE_KEY`')
+            log.warning('Long request processing detected.\n'
+                        'Request was %s\nYou have to process request in %ss\n'
+                        'request was automatically responded with `ERROR_RESPONSE_KEY`',
+                        request, RESPONSE_TIMEOUT)
 
             dispatcher = self.get_dispatcher()
             loop = dispatcher.loop
@@ -113,10 +117,10 @@ class WebhookRequestHandler(web.View):
             try:
                 result = task.result()
             except Exception as e:
-                logging.info('Slow request processor raised an error, passing to errors_handlers')
+                log.info('Slow request processor raised an error, passing to errors_handlers')
                 loop.create_task(dispatcher.errors_handlers.notify(dispatcher, request, e))
             else:
-                logging.warning(f'Result is {result}')
+                log.warning('Result is %s', result)
 
         return slow_request_processor
 
@@ -142,12 +146,13 @@ class WebhookRequestHandler(web.View):
         if isinstance(result, AliceResponse):
             return generate_json_payload(**result.to_json())
         if result is None:
-            logging.critical('Got `None` instead of a response!\n'
-                             f'Generating default error response based on {request}')
+            log.critical('Got `None` instead of a response!\nGenerating'
+                         ' default error response based on %r', request)
             return self.default_error_response(request)
         if not isinstance(result, dict):
             # If result is not a dict, it may cause an error. Warn developer
-            logging.warning(f'Result expected `AliceResponse` or dict, got {type(result)} ({result})')
+            log.warning('Result expected `AliceResponse` or dict, got %r (%r)',
+                        type(result), result)
         return result
 
     async def post(self):
@@ -186,9 +191,9 @@ def configure_app(app, dispatcher, path=DEFAULT_WEB_PATH,
     else:
         response_text = str(default_response_or_text)
         app[ERROR_RESPONSE_KEY] = Response(response_text)
-        logging.warning('Automatically converted default_response_or_text to str\n'
-                        f'It\'ll be {response_text}\n'
-                        'Consider using string or `aioalice.types.Response` next time')
+        log.warning('Automatically converted default_response_or_text'
+                    ' to str\nIt\'ll be %r\nConsider using string or'
+                    ' `aioalice.types.Response` next time', response_text)
 
 
 def get_new_configured_app(dispatcher, path=DEFAULT_WEB_PATH,

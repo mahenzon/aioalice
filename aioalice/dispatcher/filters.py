@@ -4,6 +4,8 @@ import logging
 
 from ..utils.helper import Helper, HelperMode, Item
 
+log = logging.getLogger(__name__)
+
 
 async def check_filter(filter_, args):
     """
@@ -218,8 +220,8 @@ def generate_default_filters(dispatcher, *args, **kwargs):
         elif isinstance(filter_data, Filter):
             filters_list.append(filter_data)
         else:
-            logging.warning('Unexpected filter with name '
-                            f'{name!r} of type `{type(filter_data)}` ({filter_data})')
+            log.warning('Unexpected filter with name %r of type `%r` (%s)',
+                        name, type(filter_data), filter_data)
 
     filters_list += list(args)  # Some custom filters
 

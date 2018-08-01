@@ -7,11 +7,14 @@ from ..utils.helper import Helper, HelperMode, Item
 
 API_URL = 'https://dialogs.yandex.net/api/v1/skills/{skill_id}/{method}'
 
+log = logging.getLogger(__name__)
+
 
 async def _check_result(response):
     body = await response.text()
     if response.content_type != 'application/json':
-        logging.error(f'Invalid response with content type {response.content_type}: \"{body}\"')
+        log.error('Invalid response with content type %r: %r',
+                  response.content_type, body)
         exceptions.DialogsAPIError.detect(body)
 
     try:
@@ -19,7 +22,7 @@ async def _check_result(response):
     except ValueError:
         result_json = {}
 
-    logging.debug(f'Request result is {result_json}')
+    log.debug('Request result is %r', result_json)
 
     if HTTPStatus.OK <= response.status <= HTTPStatus.IM_USED:
         return result_json
@@ -28,7 +31,8 @@ async def _check_result(response):
     else:
         description = body
 
-    logging.warning(f'Response status {response.status} with description {description}')
+    log.warning('Response status %r with description %r',
+                response.status, description)
     exceptions.DialogsAPIError.detect(description)
 
 
@@ -51,7 +55,8 @@ async def request(session, skill_id, oauth_token, method, json=None, file=None, 
     :return: result
     :rtype: ::obj:`dict`
     """
-    logging.debug(f"Making a `{request_method}` request to '{method}' with json `{json}` or file `{file}`")
+    log.debug("Making a `%s` request to %r with json `%r` or file `%r`",
+              request_method, method, json, file)
     url = Methods.api_url(skill_id, method)
     headers = {'Authorization': oauth_token}
     data = None
