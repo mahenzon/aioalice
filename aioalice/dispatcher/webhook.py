@@ -55,7 +55,11 @@ class WebhookRequestHandler(web.View):
         :return: :class:`aioalice.types.AliceRequest`
         """
         data = await self.request.json()
-        return AliceRequest(**data)
+        try:
+            return AliceRequest(**data)
+        except Exception:
+            log.exception('Exception loading AliceRequest from\n%r', data)
+            raise
 
     async def process_request(self, request):
         """
