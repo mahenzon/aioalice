@@ -6,6 +6,8 @@ import logging
 # use `DEFAULT_STATE` for FSM, else no state check will be applied
 DEFAULT_STATE = 'DEFAULT_STATE'
 
+log = logging.getLogger(__name__)
+
 
 class BaseStorage:
     """
@@ -144,8 +146,8 @@ class DisabledStorage(BaseStorage):
 
     @staticmethod
     def _warn():
-        logging.warning("You haven’t set any storage yet so no states and no data will be saved.\n"
-                        "You can connect MemoryStorage for debug purposes or non-essential data.")
+        log.warning("You haven’t set any storage yet so no states and no data will be saved.\n"
+                    "You can connect MemoryStorage for debug purposes or non-essential data.")
 
 
 class MemoryStorage(BaseStorage):

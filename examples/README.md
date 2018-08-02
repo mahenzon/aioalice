@@ -9,6 +9,7 @@
 - [Самый простой навык](hello-alice.py)
 - [Купи слона](buy-elephant.py)
 - [Работа с FSM на примере игры \(Finite State Machine - Машина состояний\)](FSM_games.py)
+- [Пропускаем хэндлеры, логгируем запросы](skip_handler_log_everything.py)
 - [Проверить загруженные изображения](get_images.py)
 - [Загрузить изображение](upload_image.py)
 - [Отправить карточку с одним большим изображением](card_big_image.py)
