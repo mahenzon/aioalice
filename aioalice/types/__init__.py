@@ -4,6 +4,7 @@ from .markup import Markup
 from .request import Request, RequestType
 from .session import BaseSession, Session
 
+from .quota import Quota
 from .uploaded_image import UploadedImage
 from .media_button import MediaButton
 from .image import Image
