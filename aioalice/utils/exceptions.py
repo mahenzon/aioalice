@@ -52,3 +52,7 @@ class Forbidden(DialogsAPIError, match='Forbidden'):
 
 class ContentNotProvided(DialogsAPIError, match='URL or FILE is needed'):
     '''Is thrown when no image is provided within request'''
+
+
+class InvalidImageID(DialogsAPIError, match='Invalid image ID'):
+    '''Is thrown if a wrong image_id is provided within request'''

@@ -5,7 +5,8 @@ from http import HTTPStatus
 from ..utils import json, exceptions
 from ..utils.helper import Helper, HelperMode, Item
 
-API_URL = 'https://dialogs.yandex.net/api/v1/skills/{skill_id}/{method}'
+BASE_URL = 'https://dialogs.yandex.net/api/v1/'
+API_URL = BASE_URL + 'skills/{skill_id}/{method}/'
 
 log = logging.getLogger(__name__)
 
@@ -36,28 +37,36 @@ async def _check_result(response):
     exceptions.DialogsAPIError.detect(description)
 
 
-async def request(session, skill_id, oauth_token, method, json=None, file=None, request_method='POST', **kwargs):
+async def request(session, oauth_token, skill_id=None, method=None, json=None,
+                  file=None, request_method='POST', custom_url=None, **kwargs):
     """
     Make a request to API
 
     :param session: HTTP Client session
     :type session: :obj:`aiohttp.ClientSession`
-    :param skill_id: skill_id
-    :type skill_id: :obj:`str`
     :param oauth_token: oauth_token
     :type oauth_token: :obj:`str`
-    :param method: API method
+    :param skill_id: skill_id. Optional. Not used if custom_url is provided
+    :type skill_id: :obj:`str`
+    :param method: API method. Optional. Not used if custom_url is provided
     :type method: :obj:`str`
     :param json: request payload
     :type json: :obj: `dict`
     :param file: file
     :type file: :obj: `io.BytesIO`
+    :param request_method: API request method
+    :type request_method: :obj:`str`
+    :param custom_url: Yandex has very developer UNfriendly API, so some endpoints cannot be achieved by standatd template.
+    :type custom_url: :obj:`str`
     :return: result
     :rtype: ::obj:`dict`
     """
     log.debug("Making a `%s` request to %r with json `%r` or file `%r`",
               request_method, method, json, file)
-    url = Methods.api_url(skill_id, method)
+    if custom_url is None:
+        url = Methods.api_url(skill_id, method)
+    else:
+        url = custom_url
     headers = {'Authorization': oauth_token}
     data = None
     if file:
@@ -75,6 +84,7 @@ class Methods(Helper):
     mode = HelperMode.lowerCamelCase
 
     IMAGES = Item()  # images
+    STATUS = Item()  # status
 
     @staticmethod
     def api_url(skill_id, method):
