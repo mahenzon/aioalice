@@ -8,7 +8,7 @@ from .storage import DisabledStorage, MemoryStorage, DEFAULT_STATE
 from .filters import generate_default_filters, ExceptionsFilter
 from ..utils import json, exceptions
 
-from ..types import UploadedImage
+from ..types import UploadedImage, Quota
 # log = logging.getLogger(__name__)
 
 
@@ -168,11 +168,16 @@ class Dispatcher:
         '''
         Get uploaded images
 
+        :param skill_id: Provide if was not set at the Dispatcher init
+        :type skill_id: :obj:`str`
+        :param oauth_token: Provide if was not set at the Dispatcher init
+        :type oauth_token: :obj:`str`
+
         :return: list of UploadedImage instances
         '''
         skill_id, oauth_token = self._check_auth(skill_id, oauth_token)
         result = await api.request(
-            self.session, skill_id, oauth_token,
+            self.session, oauth_token, skill_id,
             api.Methods.IMAGES, request_method='GET'
         )
         if 'images' not in result:
@@ -182,6 +187,13 @@ class Dispatcher:
     async def upload_image(self, image_url_or_bytes, skill_id=None, oauth_token=None):
         '''
         Upload image by either url or bytes
+
+        :param image_url_or_bytes: Image URL or bytes
+        :type image_url_or_bytes: :obj:`str` or `io.BytesIO`
+        :param skill_id: Provide if was not set at the Dispatcher init
+        :type skill_id: :obj:`str`
+        :param oauth_token: Provide if was not set at the Dispatcher init
+        :type oauth_token: :obj:`str`
 
         :return: UploadedImage
         '''
@@ -193,9 +205,51 @@ class Dispatcher:
         else:
             file = image_url_or_bytes
         result = await api.request(
-            self.session, skill_id, oauth_token,
+            self.session, oauth_token, skill_id,
             api.Methods.IMAGES, json, file
         )
         if 'image' not in result:
             raise exceptions.ApiChanged(f'Expected "image" in result, got {result}')
         return UploadedImage(**result['image'])
+
+    async def get_images_quota(self, oauth_token=None):
+        '''
+        Get images storage quota
+
+        :param oauth_token: Provide if was not set at the Dispatcher init
+        :type oauth_token: :obj:`str`
+
+        :return: Quota
+        '''
+        oauth_token = oauth_token or self.oauth_token
+        if oauth_token is None:
+            raise exceptions.AuthRequired('Please provide oauth_token')
+
+        result = await api.request(
+            self.session, oauth_token, request_method='GET',
+            custom_url=api.BASE_URL + api.Methods.STATUS
+        )
+        if 'images' not in result or 'quota' not in result['images']:
+            raise exceptions.ApiChanged(f'Expected "images" "quota" in result, got {result}')
+        return Quota(**result['images']['quota'])
+
+    async def delete_image(self, image_id, skill_id=None, oauth_token=None):
+        '''
+        Delete image by id
+
+        :param image_id: Image id to be deleted
+        :type image_id: :obj:`str`
+        :param skill_id: Provide if was not set at the Dispatcher init
+        :type skill_id: :obj:`str`
+        :param oauth_token: Provide if was not set at the Dispatcher init
+        :type oauth_token: :obj:`str`
+
+        :return: True if result is ok
+        '''
+        skill_id, oauth_token = self._check_auth(skill_id, oauth_token)
+        url = api.Methods.api_url(skill_id, api.Methods.IMAGES) + image_id
+        result = await api.request(
+            self.session, oauth_token,
+            request_method='DELETE', custom_url=url
+        )
+        return result['result'] == 'ok' if 'result' in result else False
