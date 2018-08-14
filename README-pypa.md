@@ -1,8 +1,3 @@
-<p align="center">
-    <a href="README.md">Русский</a> | English
-</p>
-
-
 # aioAlice
 
 ## AsyncIO library for Yandex Alice (Yandex Dialogs) 
@@ -26,7 +21,7 @@ source ./aliceenv/bin/activate
 
 pip install pip -U
 pip install setuptools -U
-pip install uvloop  # uvloop if you want, but it can cause some problems
+pip install uvloop  # uvloop if you want
 
 pip install aioalice -U
 # Or install from GitHub:
@@ -42,7 +37,7 @@ python setup.py install
 
 ### Quick start
 
-[Hello alice](examples/hello-alice.py)
+[Hello alice](https://github.com/surik00/aioalice/blob/master/examples/hello-alice.py)
 
 ```python
 dp = Dispatcher()
@@ -55,11 +50,11 @@ async def handle_all_requests(alice_request):
 
 ### Cards
 
-- [Upload image example](examples/upload_image.py)
-- [Big Image Card example](examples/card_big_image.py)
-- [Items List Card example](examples/card_items_list.py)
+- [All examples](https://github.com/surik00/aioalice/blob/master/examples/README-en.md)
 
-- [All examples](examples/README-en.md)
+- [Upload image example](https://github.com/surik00/aioalice/blob/master/examples/upload_image.py)
+- [Big Image Card example](https://github.com/surik00/aioalice/blob/master/examples/card_big_image.py)
+- [Items List Card example](https://github.com/surik00/aioalice/blob/master/examples/card_items_list.py)
 
 
 ### JSON serializing

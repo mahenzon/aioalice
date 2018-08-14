@@ -5,7 +5,7 @@
 # Яндекс Алиса. Диалоги (навыки)
 
 
-**aioalice** это асинхронная библиотека для взаимодействия с Алисой
+**aioAlice** это асинхронная библиотека для взаимодействия с Алисой
 
 
 ## Зачем?
@@ -28,7 +28,9 @@ pip install pip -U
 pip install setuptools -U
 pip install uvloop  # uvloop при желании
 
-pip install git+https://github.com/surik00/aioalice.git -U
+pip install aioalice -U
+# Or install from GitHub:
+# pip install git+https://github.com/surik00/aioalice.git -U
 
 # Если git не установлен:
 # 1. скачайте ZIP
