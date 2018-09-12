@@ -8,3 +8,4 @@ class Meta(AliceObject):
     locale = attrib(type=str)
     timezone = attrib(type=str)
     client_id = attrib(type=str)
+    flags = attrib(factory=list)
