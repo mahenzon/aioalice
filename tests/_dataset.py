@@ -169,7 +169,6 @@ EXPECTED_CARD_BIG_IMAGE_JSON = {
     "title": CARD_TITLE,
     "description": CARD_DESCR,
     "button": deepcopy(MEDIA_BUTTON),
-    "footer": deepcopy(FOOTER)
 }
 
 
@@ -201,4 +200,29 @@ EXPECTED_ALICE_RESPONSE_ITEMS_LIST_WITH_BUTTON = {
     },
     "session": BASE_SESSION,
     "version": "1.0"
+}
+
+
+DATA_FROM_STATION = {
+    'meta': {
+        'client_id': 'ru.yandex.quasar.services/1.0 (Yandex Station; android 6.0.1)',
+        'flags': [
+            'no_cards_support'
+        ],
+        'locale': 'ru-RU',
+        'timezone': 'Europe/Moscow'
+    },
+    'request': {
+        'command': '',
+        'original_utterance': 'запусти навык qwerty',
+        'type': 'SimpleUtterance'
+    },
+    'session': {
+        'message_id': 0,
+        'new': True,
+        'session_id': '618709-bb99dd92-82c4f626-442a4',
+        'skill_id': '94d16-a32f-4932-9f5e-354d31f71998',
+        'user_id': 'CFC516B0EC123B86C78532BCEC1C33CBF05D54EF15C8001B52628EF49F580'
+    },
+    'version': '1.0'
 }

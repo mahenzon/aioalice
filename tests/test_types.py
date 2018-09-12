@@ -15,7 +15,8 @@ from _dataset import META, MARKUP, SESSION, \
     EXPECTED_CARD_ITEMS_LIST_JSON, RESPONSE_TEXT, \
     RESPONSE_BUTTON, \
     EXPECTED_ALICE_RESPONSE_BIG_IMAGE_WITH_BUTTON, \
-    EXPECTED_ALICE_RESPONSE_ITEMS_LIST_WITH_BUTTON
+    EXPECTED_ALICE_RESPONSE_ITEMS_LIST_WITH_BUTTON, \
+    DATA_FROM_STATION
 
 
 class TestAliceTypes(unittest.TestCase):
@@ -28,6 +29,8 @@ class TestAliceTypes(unittest.TestCase):
         self.assertEqual(meta.locale, dct['locale'])
         self.assertEqual(meta.timezone, dct['timezone'])
         self.assertEqual(meta.client_id, dct['client_id'])
+        if 'flags' in dct:
+            self.assertEqual(meta.flags, dct['flags'])
 
     def test_meta(self):
         meta = types.Meta(**META)
@@ -44,7 +47,8 @@ class TestAliceTypes(unittest.TestCase):
         self.assertEqual(req.command, dct['command'])
         self.assertEqual(req.original_utterance, dct['original_utterance'])
         self.assertEqual(req.type, dct['type'])
-        self.assertEqual(req.payload, dct['payload'])
+        if 'payload' in dct:
+            self.assertEqual(req.payload, dct['payload'])
         if 'markup' in dct:
             self._test_markup(req.markup, dct['markup'])
 
@@ -123,10 +127,15 @@ class TestAliceTypes(unittest.TestCase):
         self._test_request(arq.request, dct['request'])
         self._test_meta(arq.meta, dct['meta'])
 
+    def _test_alice_request_from_dct(self, dct):
+        alice_request = types.AliceRequest(**dct)
+        self._test_alice_request(alice_request, dct)
+
     def test_alice_request(self):
-        alice_request = types.AliceRequest(**ALICE_REQUEST)
-        self.assertEqual(alice_request.to_json(), ALICE_REQUEST)
-        self._test_alice_request(alice_request, ALICE_REQUEST)
+        self._test_alice_request_from_dct(ALICE_REQUEST)
+
+    def test_alice_request_from_station(self):
+        self._test_alice_request_from_dct(DATA_FROM_STATION)
 
     def _test_alice_response(self, arp, dct):
         self.assertEqual(arp.version, dct['version'])
@@ -159,7 +168,6 @@ class TestAliceTypes(unittest.TestCase):
         alice_response = alice_request.response_big_image(
             RESPONSE_TEXT, IMAGE_ID, CARD_TITLE, CARD_DESCR,
             types.MediaButton(BUTTON_TEXT, URL, MB_PAYLOAD),
-            types.CardFooter(FOOTER_TEXT, MEDIA_BUTTON),
             buttons=[RESPONSE_BUTTON]
         )
         self._assert_payload(alice_response, EXPECTED_ALICE_RESPONSE_BIG_IMAGE_WITH_BUTTON)
@@ -225,7 +233,6 @@ class TestAliceTypes(unittest.TestCase):
             title=CARD_TITLE,
             description=CARD_DESCR,
             button=types.MediaButton(BUTTON_TEXT, URL, MB_PAYLOAD),
-            footer=types.CardFooter(FOOTER_TEXT, MEDIA_BUTTON)
         )
         self._assert_payload(card_big_image, EXPECTED_CARD_BIG_IMAGE_JSON)
 
@@ -233,7 +240,6 @@ class TestAliceTypes(unittest.TestCase):
         card_big_image = types.Card.big_image(
             IMAGE_ID, CARD_TITLE, CARD_DESCR,
             types.MediaButton(BUTTON_TEXT, URL, MB_PAYLOAD),
-            types.CardFooter(FOOTER_TEXT, MEDIA_BUTTON)
         )
         self._assert_payload(card_big_image, EXPECTED_CARD_BIG_IMAGE_JSON)
 
