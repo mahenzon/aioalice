@@ -159,7 +159,6 @@ class TestAliceTypes(unittest.TestCase):
         alice_response = alice_request.response_big_image(
             RESPONSE_TEXT, IMAGE_ID, CARD_TITLE, CARD_DESCR,
             types.MediaButton(BUTTON_TEXT, URL, MB_PAYLOAD),
-            types.CardFooter(FOOTER_TEXT, MEDIA_BUTTON),
             buttons=[RESPONSE_BUTTON]
         )
         self._assert_payload(alice_response, EXPECTED_ALICE_RESPONSE_BIG_IMAGE_WITH_BUTTON)
@@ -225,7 +224,6 @@ class TestAliceTypes(unittest.TestCase):
             title=CARD_TITLE,
             description=CARD_DESCR,
             button=types.MediaButton(BUTTON_TEXT, URL, MB_PAYLOAD),
-            footer=types.CardFooter(FOOTER_TEXT, MEDIA_BUTTON)
         )
         self._assert_payload(card_big_image, EXPECTED_CARD_BIG_IMAGE_JSON)
 
@@ -233,7 +231,6 @@ class TestAliceTypes(unittest.TestCase):
         card_big_image = types.Card.big_image(
             IMAGE_ID, CARD_TITLE, CARD_DESCR,
             types.MediaButton(BUTTON_TEXT, URL, MB_PAYLOAD),
-            types.CardFooter(FOOTER_TEXT, MEDIA_BUTTON)
         )
         self._assert_payload(card_big_image, EXPECTED_CARD_BIG_IMAGE_JSON)
 

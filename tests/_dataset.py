@@ -169,7 +169,6 @@ EXPECTED_CARD_BIG_IMAGE_JSON = {
     "title": CARD_TITLE,
     "description": CARD_DESCR,
     "button": deepcopy(MEDIA_BUTTON),
-    "footer": deepcopy(FOOTER)
 }
 
 
