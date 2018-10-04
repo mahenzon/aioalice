@@ -1,8 +1,8 @@
 from attr import attrs, attrib
 
-from aioalice.utils import safe_kwargs
+from aioalice.utils import safe_kwargs, ensure_cls
 from aioalice.utils.helper import Helper, HelperMode, Item
-from . import AliceObject, Markup
+from . import AliceObject, Markup, NaturalLanguageUnderstanding
 
 
 @safe_kwargs
@@ -14,6 +14,7 @@ class Request(AliceObject):
     original_utterance = attrib(default='', type=str)  # Can be none if payload passed
     markup = attrib(default=None)
     payload = attrib(default=None)
+    nlu = attrib(default=None, convert=ensure_cls(NaturalLanguageUnderstanding))
 
     @type.validator
     def check(self, attribute, value):
