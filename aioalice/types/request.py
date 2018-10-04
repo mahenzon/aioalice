@@ -1,9 +1,11 @@
 from attr import attrs, attrib
 
+from aioalice.utils import safe_kwargs
 from aioalice.utils.helper import Helper, HelperMode, Item
 from . import AliceObject, Markup
 
 
+@safe_kwargs
 @attrs
 class Request(AliceObject):
     """Request object"""
