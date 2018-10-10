@@ -3,7 +3,7 @@ from attr import attrs, attrib
 
 from aioalice.utils import ensure_cls
 from aioalice.utils.helper import Helper, HelperMode, Item
-from . import AliceObject, EntityToken, EntityValue
+from . import AliceObject, EntityTokens, EntityValue
 
 log = logging.getLogger(__name__)
 
@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 class Entity(AliceObject):
     """Entity object"""
     type = attrib(type=str)
-    tokens = attrib(convert=ensure_cls(EntityToken))
+    tokens = attrib(convert=ensure_cls(EntityTokens))
     value = attrib(convert=ensure_cls(EntityValue))
 
     @type.validator
