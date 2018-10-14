@@ -56,7 +56,7 @@ class WebhookRequestHandler(web.View):
         """
         data = await self.request.json()
         try:
-            return AliceRequest(**data)
+            return AliceRequest(self.request, **data)
         except Exception:
             log.exception('Exception loading AliceRequest from\n%r', data)
             raise

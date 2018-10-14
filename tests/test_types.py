@@ -53,25 +53,28 @@ class TestAliceTypes(unittest.TestCase):
         self._test_entity_tokens(et, ENTITY_TOKEN)
 
     def _test_entity_value(self, ev, dct):
+        if not isinstance(dct, dict):
+            #self.assertEqual(ev, dct)
+            return
         for key in (
-            'first_name',
-            'patronymic_name',
-            'last_name',
-            'country',
-            'city',
-            'street',
-            'house_number',
-            'airport',
-            'year',
-            'year_is_relative',
-            'month',
-            'month_is_relative',
-            'day',
-            'day_is_relative',
-            'hour',
-            'hour_is_relative',
-            'minute',
-            'minute_is_relative',
+                'first_name',
+                'patronymic_name',
+                'last_name',
+                'country',
+                'city',
+                'street',
+                'house_number',
+                'airport',
+                'year',
+                'year_is_relative',
+                'month',
+                'month_is_relative',
+                'day',
+                'day_is_relative',
+                'hour',
+                'hour_is_relative',
+                'minute',
+                'minute_is_relative',
                 'value',):
             if key in dct:
                 print('\nKey occured', key, '\n')
@@ -184,7 +187,7 @@ class TestAliceTypes(unittest.TestCase):
         self._test_meta(arq.meta, dct['meta'])
 
     def _test_alice_request_from_dct(self, dct):
-        alice_request = types.AliceRequest(**dct)
+        alice_request = types.AliceRequest(None, **dct)
         self._test_alice_request(alice_request, dct)
 
     def test_alice_request(self):
@@ -204,7 +207,7 @@ class TestAliceTypes(unittest.TestCase):
         self._test_alice_response(alice_response, ALICE_RESPONSE_WITH_BUTTONS)
 
     def test_response_from_request(self):
-        alice_request = types.AliceRequest(**ALICE_REQUEST)
+        alice_request = types.AliceRequest(None, **ALICE_REQUEST)
 
         alice_response = alice_request.response(
             EXPECTED_RESPONSE['response']['text']
@@ -212,7 +215,7 @@ class TestAliceTypes(unittest.TestCase):
         self._assert_payload(alice_response, EXPECTED_RESPONSE)
 
     def test_response_from_request2(self):
-        alice_request = types.AliceRequest(**ALICE_REQUEST)
+        alice_request = types.AliceRequest(None, **ALICE_REQUEST)
         alice_response = alice_request.response(
             RESPONSE_TEXT, tts=TTS,
             buttons=[types.Button(BUTTON_TEXT, url=URL)]
@@ -220,7 +223,7 @@ class TestAliceTypes(unittest.TestCase):
         self._assert_payload(alice_response, EXPECTED_RESPONSE_WITH_BUTTONS)
 
     def test_response_big_image_from_request(self):
-        alice_request = types.AliceRequest(**ALICE_REQUEST)
+        alice_request = types.AliceRequest(None, **ALICE_REQUEST)
         alice_response = alice_request.response_big_image(
             RESPONSE_TEXT, IMAGE_ID, CARD_TITLE, CARD_DESCR,
             types.MediaButton(BUTTON_TEXT, URL, MB_PAYLOAD),
@@ -229,7 +232,7 @@ class TestAliceTypes(unittest.TestCase):
         self._assert_payload(alice_response, EXPECTED_ALICE_RESPONSE_BIG_IMAGE_WITH_BUTTON)
 
     def test_response_items_list_from_request(self):
-        alice_request = types.AliceRequest(**ALICE_REQUEST)
+        alice_request = types.AliceRequest(None, **ALICE_REQUEST)
         alice_response = alice_request.response_items_list(
             RESPONSE_TEXT, CARD_HEADER_TEXT,
             [types.Image(**IMAGE)],
