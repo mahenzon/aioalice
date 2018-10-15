@@ -243,6 +243,15 @@ ENTITY = {
     "value": ENTITY_VALUE
 }
 
+ENTITY_INTEGER = {
+    "tokens": {
+        "start": 5,
+        "end": 6
+    },
+    "type": "YANDEX.NUMBER",
+    "value": 16
+}
+
 NLU = {
     "tokens": [
         "закажи",
@@ -267,14 +276,7 @@ NLU = {
                 "last_name": "толстой"
             }
         },
-        {
-            "tokens": {
-                "start": 5,
-                "end": 6
-            },
-            "type": "YANDEX.NUMBER",
-            "value": 16
-        },
+        ENTITY_INTEGER,
         {
             "tokens": {
                 "start": 6,
