@@ -1,6 +1,10 @@
 from .base import AliceObject
 from .meta import Meta
 from .markup import Markup
+from .entity_tokens import EntityTokens
+from .entity_value import EntityValue
+from .entity import Entity, EntityType
+from .natural_language_understanding import NaturalLanguageUnderstanding
 from .request import Request, RequestType
 from .session import BaseSession, Session
 

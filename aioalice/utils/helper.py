@@ -46,6 +46,7 @@ class HelperMode(Helper):
     CamelCase = 'CamelCase'
     snake_case = 'snake_case'
     lowercase = 'lowercase'
+    UPPER_DOT_SEPARATED = 'UPPER.DOT.SEPARATED'
 
     @classmethod
     def all(cls):
@@ -120,16 +121,18 @@ class HelperMode(Helper):
         :param mode:
         :return:
         """
-        if mode == cls.SCREAMING_SNAKE_CASE:
+        if mode == cls.UPPER_DOT_SEPARATED:
+            return cls._screaming_snake_case(text).replace('_', '.')
+        elif mode == cls.SCREAMING_SNAKE_CASE:
             return cls._screaming_snake_case(text)
         elif mode == cls.snake_case:
             return cls._snake_case(text)
-        elif mode == cls.lowercase:
-            return cls._snake_case(text).replace('_', '')
         elif mode == cls.lowerCamelCase:
             return cls._camel_case(text)
         elif mode == cls.CamelCase:
             return cls._camel_case(text, True)
+        elif mode == cls.lowercase:
+            return cls._snake_case(text).replace('_', '')
         elif callable(mode):
             return mode(text)
         return text

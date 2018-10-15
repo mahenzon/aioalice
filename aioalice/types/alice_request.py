@@ -1,7 +1,7 @@
 from attr import attrs, attrib
+from aioalice.utils import ensure_cls
 from . import AliceObject, Meta, Session, \
     Card, Request, Response, AliceResponse
-from aioalice.utils import ensure_cls
 
 
 @attrs

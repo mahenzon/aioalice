@@ -16,7 +16,8 @@ from _dataset import META, MARKUP, SESSION, \
     RESPONSE_BUTTON, \
     EXPECTED_ALICE_RESPONSE_BIG_IMAGE_WITH_BUTTON, \
     EXPECTED_ALICE_RESPONSE_ITEMS_LIST_WITH_BUTTON, \
-    DATA_FROM_STATION
+    DATA_FROM_STATION, REQUEST_WITH_NLU, ENTITY_TOKEN, \
+    ENTITY_VALUE, ENTITY, ENTITY_INTEGER, NLU
 
 
 class TestAliceTypes(unittest.TestCase):
@@ -43,6 +44,64 @@ class TestAliceTypes(unittest.TestCase):
         markup = types.Markup(**MARKUP)
         self._test_markup(markup, MARKUP)
 
+    def _test_entity_tokens(self, et, dct):
+        self.assertEqual(et.start, dct['start'])
+        self.assertEqual(et.end, dct['end'])
+
+    def test_entity_tokens(self):
+        et = types.EntityTokens(**ENTITY_TOKEN)
+        self._test_entity_tokens(et, ENTITY_TOKEN)
+
+    def _test_entity_value(self, ev, dct):
+        for key in (
+            'first_name',
+            'patronymic_name',
+            'last_name',
+            'country',
+            'city',
+            'street',
+            'house_number',
+            'airport',
+            'year',
+            'year_is_relative',
+            'month',
+            'month_is_relative',
+            'day',
+            'day_is_relative',
+            'hour',
+            'hour_is_relative',
+            'minute',
+            'minute_is_relative',
+        ):
+            if key in dct:
+                self.assertEqual(getattr(ev, key), dct[key])
+
+    def test_entity_value(self):
+        ev = types.EntityValue(**ENTITY_VALUE)
+        self._test_entity_value(ev, ENTITY_VALUE)
+
+    def _test_entity(self, entity, dct):
+        self._test_entity_tokens(entity.tokens, dct['tokens'])
+        if entity.type == types.EntityType.YANDEX_NUMBER:
+            entity.value == dct['value']
+        else:
+            self._test_entity_value(entity.value, dct['value'])
+
+    def test_entity(self):
+        entity = types.Entity(**ENTITY)
+        self._test_entity(entity, ENTITY)
+        entity_int = types.Entity(**ENTITY_INTEGER)
+        self._test_entity(entity_int, ENTITY_INTEGER)
+
+    def _test_nlu(self, nlu, dct):
+        self.assertEqual(nlu.tokens, dct['tokens'])
+        for entity, _dct in zip(nlu.entities, dct['entities']):
+            self._test_entity(entity, _dct)
+
+    def test_nlu(self):
+        nlu = types.NaturalLanguageUnderstanding(**NLU)
+        self._test_nlu(nlu, NLU)
+
     def _test_request(self, req, dct):
         self.assertEqual(req.command, dct['command'])
         self.assertEqual(req.original_utterance, dct['original_utterance'])
@@ -51,6 +110,8 @@ class TestAliceTypes(unittest.TestCase):
             self.assertEqual(req.payload, dct['payload'])
         if 'markup' in dct:
             self._test_markup(req.markup, dct['markup'])
+        if 'nlu' in dct:
+            self._test_nlu(req.nlu, dct['nlu'])
 
     def test_request(self):
         request = types.Request(**REQUEST)
@@ -259,6 +320,9 @@ class TestAliceTypes(unittest.TestCase):
             dict(text=FOOTER_TEXT, button=MEDIA_BUTTON)
         )
         self._assert_payload(card_items_list, EXPECTED_CARD_ITEMS_LIST_JSON)
+
+    def test_request_with_nlu(self):
+        self._test_alice_request_from_dct(REQUEST_WITH_NLU)
 
 
 if __name__ == '__main__':
