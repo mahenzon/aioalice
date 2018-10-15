@@ -29,6 +29,3 @@ class EntityValue(AliceObject):
     hour_is_relative = attrib(default=False, type=bool)
     minute = attrib(default=None, type=str)
     minute_is_relative = attrib(default=False, type=bool)
-
-    # YANDEX.NUMBER
-    value = attrib(default=None)  # integer / float
