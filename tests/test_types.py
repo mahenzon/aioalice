@@ -17,7 +17,7 @@ from _dataset import META, MARKUP, SESSION, \
     EXPECTED_ALICE_RESPONSE_BIG_IMAGE_WITH_BUTTON, \
     EXPECTED_ALICE_RESPONSE_ITEMS_LIST_WITH_BUTTON, \
     DATA_FROM_STATION, REQUEST_WITH_NLU, ENTITY_TOKEN, \
-    ENTITY_VALUE, ENTITY, NLU
+    ENTITY_VALUE, ENTITY, ENTITY_INTEGER, NLU
 
 
 class TestAliceTypes(unittest.TestCase):
@@ -72,9 +72,8 @@ class TestAliceTypes(unittest.TestCase):
             'hour_is_relative',
             'minute',
             'minute_is_relative',
-                'value',):
+        ):
             if key in dct:
-                print('\nKey occured', key, '\n')
                 self.assertEqual(getattr(ev, key), dct[key])
 
     def test_entity_value(self):
@@ -83,10 +82,16 @@ class TestAliceTypes(unittest.TestCase):
 
     def _test_entity(self, entity, dct):
         self._test_entity_tokens(entity.tokens, dct['tokens'])
-        self._test_entity_value(entity.value, dct['value'])
+        if entity.type == types.EntityType.YANDEX_NUMBER:
+            entity.value == dct['value']
+        else:
+            self._test_entity_value(entity.value, dct['value'])
 
     def test_entity(self):
-        pass
+        entity = types.Entity(**ENTITY)
+        self._test_entity(entity, ENTITY)
+        entity_int = types.Entity(**ENTITY_INTEGER)
+        self._test_entity(entity_int, ENTITY_INTEGER)
 
     def _test_nlu(self, nlu, dct):
         self.assertEqual(nlu.tokens, dct['tokens'])
