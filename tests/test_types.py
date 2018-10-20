@@ -17,7 +17,8 @@ from _dataset import META, MARKUP, SESSION, \
     EXPECTED_ALICE_RESPONSE_BIG_IMAGE_WITH_BUTTON, \
     EXPECTED_ALICE_RESPONSE_ITEMS_LIST_WITH_BUTTON, \
     DATA_FROM_STATION, REQUEST_WITH_NLU, ENTITY_TOKEN, \
-    ENTITY_VALUE, ENTITY, ENTITY_INTEGER, NLU
+    ENTITY_VALUE, ENTITY, ENTITY_INTEGER, NLU, \
+    PING_REQUEST_1
 
 
 class TestAliceTypes(unittest.TestCase):
@@ -32,6 +33,11 @@ class TestAliceTypes(unittest.TestCase):
         self.assertEqual(meta.client_id, dct['client_id'])
         if 'flags' in dct:
             self.assertEqual(meta.flags, dct['flags'])
+        if 'interfaces' in dct:
+            self.assertEqual(
+                meta.interfaces.screen,
+                dct['interfaces']['screen']
+            )
 
     def test_meta(self):
         meta = types.Meta(**META)
@@ -323,6 +329,10 @@ class TestAliceTypes(unittest.TestCase):
 
     def test_request_with_nlu(self):
         self._test_alice_request_from_dct(REQUEST_WITH_NLU)
+
+    def test_request_with_interfaces(self):
+        alice_request = types.AliceRequest(**PING_REQUEST_1)
+        self._test_alice_request(alice_request, PING_REQUEST_1)
 
 
 if __name__ == '__main__':
