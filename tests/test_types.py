@@ -59,9 +59,6 @@ class TestAliceTypes(unittest.TestCase):
         self._test_entity_tokens(et, ENTITY_TOKEN)
 
     def _test_entity_value(self, ev, dct):
-        if not isinstance(dct, dict):
-            #self.assertEqual(ev, dct)
-            return
         for key in (
             'first_name',
             'patronymic_name',
