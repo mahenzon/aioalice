@@ -1,4 +1,5 @@
 from .base import AliceObject
+from .interfaces import Interfaces
 from .meta import Meta
 from .markup import Markup
 from .entity_tokens import EntityTokens

@@ -243,6 +243,15 @@ ENTITY = {
     "value": ENTITY_VALUE
 }
 
+ENTITY_INTEGER = {
+    "tokens": {
+        "start": 5,
+        "end": 6
+    },
+    "type": "YANDEX.NUMBER",
+    "value": 16
+}
+
 NLU = {
     "tokens": [
         "закажи",
@@ -267,14 +276,7 @@ NLU = {
                 "last_name": "толстой"
             }
         },
-        {
-            "tokens": {
-                "start": 5,
-                "end": 6
-            },
-            "type": "YANDEX.NUMBER",
-            "value": 16
-        },
+        ENTITY_INTEGER,
         {
             "tokens": {
                 "start": 6,
@@ -313,4 +315,32 @@ REQUEST_WITH_NLU = {
         "user_id": "AC9WC3DF6FCE052E45A4566A48E6B7193774B84814CE49A922E163B8B29881DC"
     },
     "version": "1.0"
+}
+
+PING_REQUEST_1 = {
+    'meta': {
+        'client_id': 'ru.yandex.searchplugin/7.16 (none none; android 4.4.2)',
+        'interfaces': {
+            'screen': {}
+        },
+        'locale': 'ru-RU',
+        'timezone': 'UTC'
+    },
+    'request': {
+        'command': 'ping',
+        'nlu': {
+            'entities': [],
+            'tokens': ['ping']
+        },
+        'original_utterance': 'ping',
+        'type': 'SimpleUtterance'
+    },
+    'session': {
+        'message_id': 0,
+        'new': True,
+        'session_id': '33234b1a-b8254783-45161bd7-3475df',
+        'skill_id': '94d12322-a36f-4922-1f5e-364d31f77998',
+        'user_id': '30395B6231A36EADCF17D4AF2707BF2D3A8E6AA48E5CD34A30365C1E642A9F9B'
+    },
+    'version': '1.0'
 }

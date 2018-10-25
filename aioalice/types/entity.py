@@ -13,13 +13,18 @@ class Entity(AliceObject):
     """Entity object"""
     type = attrib(type=str)
     tokens = attrib(convert=ensure_cls(EntityTokens))
-    value = attrib(convert=ensure_cls(EntityValue))
+    value = attrib(factory=dict)
 
     @type.validator
     def check(self, attribute, value):
         """Report unknown type"""
         if value not in EntityType.all():
             log.error('Unknown Entity type! `%r`', value)
+
+    def __attrs_post_init__(self):
+        """If entity type not number, convert to EntityValue"""
+        if self.value and self.type != EntityType.YANDEX_NUMBER:
+            self.value = EntityValue(**self.value)
 
 
 class EntityType(Helper):

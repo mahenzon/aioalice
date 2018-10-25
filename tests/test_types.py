@@ -17,7 +17,8 @@ from _dataset import META, MARKUP, SESSION, \
     EXPECTED_ALICE_RESPONSE_BIG_IMAGE_WITH_BUTTON, \
     EXPECTED_ALICE_RESPONSE_ITEMS_LIST_WITH_BUTTON, \
     DATA_FROM_STATION, REQUEST_WITH_NLU, ENTITY_TOKEN, \
-    ENTITY_VALUE, ENTITY, NLU
+    ENTITY_VALUE, ENTITY, ENTITY_INTEGER, NLU, \
+    PING_REQUEST_1
 
 
 class TestAliceTypes(unittest.TestCase):
@@ -32,6 +33,11 @@ class TestAliceTypes(unittest.TestCase):
         self.assertEqual(meta.client_id, dct['client_id'])
         if 'flags' in dct:
             self.assertEqual(meta.flags, dct['flags'])
+        if 'interfaces' in dct:
+            self.assertEqual(
+                meta.interfaces.screen,
+                dct['interfaces']['screen']
+            )
 
     def test_meta(self):
         meta = types.Meta(**META)
@@ -57,27 +63,26 @@ class TestAliceTypes(unittest.TestCase):
             #self.assertEqual(ev, dct)
             return
         for key in (
-                'first_name',
-                'patronymic_name',
-                'last_name',
-                'country',
-                'city',
-                'street',
-                'house_number',
-                'airport',
-                'year',
-                'year_is_relative',
-                'month',
-                'month_is_relative',
-                'day',
-                'day_is_relative',
-                'hour',
-                'hour_is_relative',
-                'minute',
-                'minute_is_relative',
-                'value',):
+            'first_name',
+            'patronymic_name',
+            'last_name',
+            'country',
+            'city',
+            'street',
+            'house_number',
+            'airport',
+            'year',
+            'year_is_relative',
+            'month',
+            'month_is_relative',
+            'day',
+            'day_is_relative',
+            'hour',
+            'hour_is_relative',
+            'minute',
+            'minute_is_relative',
+        ):
             if key in dct:
-                print('\nKey occured', key, '\n')
                 self.assertEqual(getattr(ev, key), dct[key])
 
     def test_entity_value(self):
@@ -86,10 +91,16 @@ class TestAliceTypes(unittest.TestCase):
 
     def _test_entity(self, entity, dct):
         self._test_entity_tokens(entity.tokens, dct['tokens'])
-        self._test_entity_value(entity.value, dct['value'])
+        if entity.type == types.EntityType.YANDEX_NUMBER:
+            entity.value == dct['value']
+        else:
+            self._test_entity_value(entity.value, dct['value'])
 
     def test_entity(self):
-        pass
+        entity = types.Entity(**ENTITY)
+        self._test_entity(entity, ENTITY)
+        entity_int = types.Entity(**ENTITY_INTEGER)
+        self._test_entity(entity_int, ENTITY_INTEGER)
 
     def _test_nlu(self, nlu, dct):
         self.assertEqual(nlu.tokens, dct['tokens'])
@@ -321,6 +332,10 @@ class TestAliceTypes(unittest.TestCase):
 
     def test_request_with_nlu(self):
         self._test_alice_request_from_dct(REQUEST_WITH_NLU)
+
+    def test_request_with_interfaces(self):
+        alice_request = types.AliceRequest(**PING_REQUEST_1)
+        self._test_alice_request(alice_request, PING_REQUEST_1)
 
 
 if __name__ == '__main__':
