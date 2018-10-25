@@ -1,4 +1,5 @@
 from attr import attrs, attrib
+from aiohttp.web import Request as WebRequest
 from aioalice.utils import ensure_cls
 from . import AliceObject, Meta, Session, \
     Card, Request, Response, AliceResponse
@@ -7,7 +8,7 @@ from . import AliceObject, Meta, Session, \
 @attrs
 class AliceRequest(AliceObject):
     """AliceRequest is a request from Alice API"""
-
+    original_request = attrib(type=WebRequest)
     meta = attrib(convert=ensure_cls(Meta))
     request = attrib(convert=ensure_cls(Request))
     session = attrib(convert=ensure_cls(Session))
