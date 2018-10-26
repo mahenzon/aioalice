@@ -65,3 +65,7 @@ async def handle_all_requests(alice_request):
 ### JSON serializing
 
 Если вы хотите использовать более быструю библиотеку для работы с JSON, установите [rapidjson](https://github.com/python-rapidjson/python-rapidjson) или [ujson](https://github.com/esnme/ultrajson). Библиотека определится и будет использована автоматически.
+
+### Навыки использующие библиотеку
+
+* [Игра в Ерундопель](https://github.com/Goodsmileduck/erundopel)
