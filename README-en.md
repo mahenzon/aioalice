@@ -65,3 +65,7 @@ async def handle_all_requests(alice_request):
 ### JSON serializing
 
 If you want to use a faster json library, install [rapidjson](https://github.com/python-rapidjson/python-rapidjson) or [ujson](https://github.com/esnme/ultrajson), it will be detected and used automatically
+
+### Skills using the library
+
+* [Erundopel game](https://github.com/Goodsmileduck/erundopel)
