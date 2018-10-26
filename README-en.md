@@ -66,6 +66,8 @@ async def handle_all_requests(alice_request):
 
 If you want to use a faster json library, install [rapidjson](https://github.com/python-rapidjson/python-rapidjson) or [ujson](https://github.com/esnme/ultrajson), it will be detected and used automatically
 
-### Skills using the library
+___
 
-* [Erundopel game](https://github.com/Goodsmileduck/erundopel)
+### Skills using aioAlice
+
+* [The Erundopel game](https://github.com/Goodsmileduck/erundopel)
