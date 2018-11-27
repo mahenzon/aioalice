@@ -71,3 +71,34 @@ ___
 ### Навыки с использованием aioAlice
 
 * [Игра в Ерундопель](https://github.com/Goodsmileduck/erundopel)
+
+
+___
+
+### Тестирование и деплой
+
+
+В примерах используется следующая конфигурация:
+
+```python
+WEBHOOK_URL_PATH = '/my-alice-webhook/'  # webhook endpoint
+
+WEBAPP_HOST = 'localhost'  # запускаем на локальной машине
+WEBAPP_PORT = 3001  # испльзуем любой не занятый порт
+```
+
+Для тестирования можно использовать [ngrok](https://ngrok.com/), тогда вебхук нужно будет установить на `https://1a2b3c4d5e.ngrok.io/my-alice-webhook/` (endpoint должен быть `WEBHOOK_URL_PATH`, так как WebApp ожидает получать обновления именно там), порт в настройках нужно указать `WEBAPP_PORT` (в данном случае 3001)
+
+
+Для продакшена можно использовать Nginx, тогда в конфигурации Nginx внутри блока `server` необходимо добавить:
+
+```
+location /my-alice-webhook/ {  # WEBHOOK_URL_PATH
+    proxy_pass         http://127.0.0.1:3001/;  # адрес до запущенного WebApp, в нашем случае это localhost и порт 3001
+    proxy_redirect     off;
+    proxy_set_header   Host $host;
+    proxy_set_header   X-Real-IP $remote_addr;
+    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header   X-Forwarded-Host $server_name;
+}
+```

@@ -60,3 +60,40 @@ async def handle_all_requests(alice_request):
 ### JSON serializing
 
 If you want to use a faster json library, install [rapidjson](https://github.com/python-rapidjson/python-rapidjson) or [ujson](https://github.com/esnme/ultrajson), it will be detected and used automatically
+
+___
+
+### Skills using aioAlice
+
+* [The Erundopel game](https://github.com/Goodsmileduck/erundopel)
+
+
+___
+
+### Testing and deployment
+
+
+In all examples the next configuration is used:
+
+```python
+WEBHOOK_URL_PATH = '/my-alice-webhook/'  # webhook endpoint
+
+WEBAPP_HOST = 'localhost'  # running on local machine
+WEBAPP_PORT = 3001  # we can use any port that is not use by other apps
+```
+
+For testing purposes you can use [ngrok](https://ngrok.com/), so set webhook to `https://1a2b3c4d5e.ngrok.io/my-alice-webhook/` (endpoint has to be `WEBHOOK_URL_PATH`, because WebApp expects to get updates only there), post has to be `WEBAPP_PORT` (in this example it is 3001)
+
+
+For production you can use Nginx, then edit Nginx configuration and add these lines inside the `server` block:
+
+```
+location /my-alice-webhook/ {  # WEBHOOK_URL_PATH
+    proxy_pass         http://127.0.0.1:3001/;  # addr to reach WebApp, in this case it is localhost and port is 3001
+    proxy_redirect     off;
+    proxy_set_header   Host $host;
+    proxy_set_header   X-Real-IP $remote_addr;
+    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header   X-Forwarded-Host $server_name;
+}
+```
