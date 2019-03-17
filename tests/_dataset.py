@@ -344,3 +344,33 @@ PING_REQUEST_1 = {
     },
     'version': '1.0'
 }
+
+REQUEST_NEW_INTERFACES = {
+    'meta': {
+        'client_id': 'ru.yandex.searchplugin/7.16 (none none; android 4.4.2)',
+        'interfaces': {
+            'account_linking': {},
+            'payments': {},
+            'screen': {}
+        },
+        'locale': 'ru-RU',
+        'timezone': 'UTC'
+    },
+    'request': {
+        'command': '',
+        'nlu': {
+            'entities': [],
+            'tokens': [],
+        },
+        'original_utterance': '',
+        'type': 'SimpleUtterance',
+    },
+    'session': {
+        'message_id': 0,
+        'new': True,
+        'session_id': 'aa6be578-34b9d8f7-e2f013b9-5c3b058d',
+        'skill_id': '94d16422-a32f-4932-9f5e-354d31f71998',
+        'user_id': '30397B6278A36EADCF17D4AF2707BF2C3A8E6BA48E5CD34A30365C1E628A9F9B'
+    },
+    'version': '1.0'
+}
