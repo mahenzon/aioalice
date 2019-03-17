@@ -1,4 +1,5 @@
 import unittest
+from functools import partial
 
 from aioalice import types
 from aioalice.utils import generate_json_payload
@@ -18,7 +19,10 @@ from _dataset import META, MARKUP, SESSION, \
     EXPECTED_ALICE_RESPONSE_ITEMS_LIST_WITH_BUTTON, \
     DATA_FROM_STATION, REQUEST_WITH_NLU, ENTITY_TOKEN, \
     ENTITY_VALUE, ENTITY, ENTITY_INTEGER, NLU, \
-    PING_REQUEST_1
+    PING_REQUEST_1, REQUEST_NEW_INTERFACES
+
+
+TestAliceRequest = partial(types.AliceRequest, None)  # original_request: https://github.com/surik00/aioalice/pull/2/
 
 
 class TestAliceTypes(unittest.TestCase):
@@ -27,6 +31,13 @@ class TestAliceTypes(unittest.TestCase):
         json_payload = generate_json_payload(**alice_obj.to_json())
         self.assertEqual(json_payload, expected_json)
 
+    def _test_interfaces(self, interfaces, dct):
+        if 'account_linking' in dct:
+            self.assertEqual(interfaces.account_linking, dct['account_linking'])
+        if 'payments' in dct:
+            self.assertEqual(interfaces.payments, dct['payments'])
+        self.assertEqual(interfaces.screen, dct['screen'])
+
     def _test_meta(self, meta, dct):
         self.assertEqual(meta.locale, dct['locale'])
         self.assertEqual(meta.timezone, dct['timezone'])
@@ -34,10 +45,7 @@ class TestAliceTypes(unittest.TestCase):
         if 'flags' in dct:
             self.assertEqual(meta.flags, dct['flags'])
         if 'interfaces' in dct:
-            self.assertEqual(
-                meta.interfaces.screen,
-                dct['interfaces']['screen']
-            )
+            self._test_interfaces(meta.interfaces, dct['interfaces'])
 
     def test_meta(self):
         meta = types.Meta(**META)
@@ -195,7 +203,7 @@ class TestAliceTypes(unittest.TestCase):
         self._test_meta(arq.meta, dct['meta'])
 
     def _test_alice_request_from_dct(self, dct):
-        alice_request = types.AliceRequest(None, **dct)
+        alice_request = TestAliceRequest(**dct)
         self._test_alice_request(alice_request, dct)
 
     def test_alice_request(self):
@@ -215,7 +223,7 @@ class TestAliceTypes(unittest.TestCase):
         self._test_alice_response(alice_response, ALICE_RESPONSE_WITH_BUTTONS)
 
     def test_response_from_request(self):
-        alice_request = types.AliceRequest(None, **ALICE_REQUEST)
+        alice_request = TestAliceRequest(**ALICE_REQUEST)
 
         alice_response = alice_request.response(
             EXPECTED_RESPONSE['response']['text']
@@ -223,7 +231,7 @@ class TestAliceTypes(unittest.TestCase):
         self._assert_payload(alice_response, EXPECTED_RESPONSE)
 
     def test_response_from_request2(self):
-        alice_request = types.AliceRequest(None, **ALICE_REQUEST)
+        alice_request = TestAliceRequest(**ALICE_REQUEST)
         alice_response = alice_request.response(
             RESPONSE_TEXT, tts=TTS,
             buttons=[types.Button(BUTTON_TEXT, url=URL)]
@@ -231,7 +239,7 @@ class TestAliceTypes(unittest.TestCase):
         self._assert_payload(alice_response, EXPECTED_RESPONSE_WITH_BUTTONS)
 
     def test_response_big_image_from_request(self):
-        alice_request = types.AliceRequest(None, **ALICE_REQUEST)
+        alice_request = TestAliceRequest(**ALICE_REQUEST)
         alice_response = alice_request.response_big_image(
             RESPONSE_TEXT, IMAGE_ID, CARD_TITLE, CARD_DESCR,
             types.MediaButton(BUTTON_TEXT, URL, MB_PAYLOAD),
@@ -240,7 +248,7 @@ class TestAliceTypes(unittest.TestCase):
         self._assert_payload(alice_response, EXPECTED_ALICE_RESPONSE_BIG_IMAGE_WITH_BUTTON)
 
     def test_response_items_list_from_request(self):
-        alice_request = types.AliceRequest(None, **ALICE_REQUEST)
+        alice_request = TestAliceRequest(**ALICE_REQUEST)
         alice_response = alice_request.response_items_list(
             RESPONSE_TEXT, CARD_HEADER_TEXT,
             [types.Image(**IMAGE)],
@@ -331,8 +339,12 @@ class TestAliceTypes(unittest.TestCase):
         self._test_alice_request_from_dct(REQUEST_WITH_NLU)
 
     def test_request_with_interfaces(self):
-        alice_request = types.AliceRequest(**PING_REQUEST_1)
+        alice_request = TestAliceRequest(**PING_REQUEST_1)
         self._test_alice_request(alice_request, PING_REQUEST_1)
+
+    def test_request_new_fields_in_interfaces(self):
+        alice_request = TestAliceRequest(**REQUEST_NEW_INTERFACES)
+        self._test_alice_request(alice_request, REQUEST_NEW_INTERFACES)
 
 
 if __name__ == '__main__':
