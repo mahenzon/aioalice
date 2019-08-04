@@ -14,13 +14,14 @@ ALICE_DISPATCHER_KEY = 'ALICE_DISPATCHER'
 ERROR_RESPONSE_KEY = 'ALICE_ERROR_RESPONSE'
 
 DEFAULT_ERROR_RESPONSE_TEXT = 'Server error. Developer has to check logs.'
-# Max time to response to API is 1.5s
-# with server on Aruba (Italy) 1.2s is a critical timeout for whole processing
+# Max time to response to API is 3s: https://yandex.ru/blog/dialogs/bolshe-vremeni-na-otvet-time-out-3-sekundy
+# with server on Aruba (Italy) whole processing (with networking) takes about 0.3s
 # NOTE that this timeout can help only if using non-blocking IO
 # in e.g use asyncio.sleep instead of time.sleep, aiohttp instead of requests, etc
 # Whole processing usually takes from 0.0004 до 0.001 (depends on system IO),
-# but Yandex starts countdown as user asks a question, request processing takes some time
-RESPONSE_TIMEOUT = 1.2
+# but Yandex starts countdown the moment when user asks a question
+# networking takes some time
+RESPONSE_TIMEOUT = 2.7
 
 
 class WebhookRequestHandler(web.View):
@@ -63,9 +64,9 @@ class WebhookRequestHandler(web.View):
 
     async def process_request(self, request):
         """
-        You have to respond in less than 1.5 seconds to webhook.
+        You have to respond in less than 3 seconds to webhook.
 
-        So... If you process longer than 1.2 (RESPONSE_TIMEOUT) seconds
+        So... If you process longer than 2.7 (RESPONSE_TIMEOUT) seconds
         webhook automatically respond with FALLBACK VALUE (ERROR_RESPONSE_KEY)
 
         :param request:
@@ -105,7 +106,7 @@ class WebhookRequestHandler(web.View):
 
         def slow_request_processor(task):
             """
-            Handle response after 1.2 sec (RESPONSE_TIMEOUT)
+            Handle response after 2.7 sec (RESPONSE_TIMEOUT)
 
             :param task:
             :return:
@@ -131,7 +132,7 @@ class WebhookRequestHandler(web.View):
     def default_error_response(self, alice_request):
         """
         Default error response will be called on timeout
-        if processing of the request will take more than 1.2s (RESPONSE_TIMEOUT)
+        if processing of the request will take more than 2.7s (RESPONSE_TIMEOUT)
 
         :param result: dict or AliceRequest
         :return: AliceResponse
