@@ -16,7 +16,7 @@ MINIMAL_PY_VERSION = (3, 6)
 if sys.version_info < MINIMAL_PY_VERSION:
     raise RuntimeError('aioAlice works only with Python {}+'.format('.'.join(map(str, MINIMAL_PY_VERSION))))
 
-__version__ = '1.2.4'
+__version__ = '1.2.5'
 
 
 def get_description():
@@ -50,7 +50,7 @@ setup(
     name='aioAlice',
     version=__version__,
     packages=find_packages(exclude=('tests', 'tests.*', 'examples',)),
-    url='https://github.com/surik00/aioalice',
+    url='https://github.com/mahenzon/aioalice',
     license='MIT',
     author='Suren Khorenyan',
     requires_python='>=3.6',
