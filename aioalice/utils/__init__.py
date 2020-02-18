@@ -5,11 +5,14 @@ from .safe_kwargs import safe_kwargs
 
 
 def ensure_cls(klass):
+    from ..types.base import AliceObject
+    safe_cls = safe_kwargs(klass) if issubclass(klass, AliceObject) else klass
+
     def converter(val):
         if val is None:
             return
         if isinstance(val, dict):
-            return klass(**val)
+            return safe_cls(**val)
         if isinstance(val, list):
             return [converter(v) for v in val]
         if not isinstance(val, klass):
