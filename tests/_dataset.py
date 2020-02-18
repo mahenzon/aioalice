@@ -374,3 +374,34 @@ REQUEST_NEW_INTERFACES = {
     },
     'version': '1.0'
 }
+
+
+REQUEST_WITH_EXTRA_KWARGS = {
+    'meta': {
+        'client_id': 'JS/1.0',
+        'locale': 'ru_RU',
+        'timezone': 'Europe/Moscow',
+        'interfaces': {
+            'screen': {},
+        },
+        '_city_ru': 'Москва',
+    },
+    'request': {
+        'command': '',
+        'original_utterance': 'Запусти навык qwerty',
+        'type': 'SimpleUtterance',
+        'nlu': {
+            'tokens': ['запусти', 'навык', 'qwerty'],
+            'entities': [],
+        },
+    },
+    'session': {
+        'session_id': '4b124ca8-19c4-4ec5-75ca-24f96ef5718e',
+        'user_id': '8e4156d21488cac9b7a7175a9374e63a74bb6ddd46cfbe34cf9dfb60c30c7bfb',
+        'skill_id': 'f5f39790-2ee1-4744-8345-ee8229dadd58',
+        'new': True,
+        'message_id': 0,
+        'deploy_tokens': {},
+    },
+    'version': '1.0',
+}
