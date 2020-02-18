@@ -1,9 +1,9 @@
 import logging
 from attr import attrs, attrib
 
-from aioalice.utils import ensure_cls
-from aioalice.utils.helper import Helper, HelperMode, Item
 from . import AliceObject, EntityTokens, EntityValue
+from ..utils import ensure_cls
+from ..utils.helper import Helper, HelperMode, Item
 
 log = logging.getLogger(__name__)
 

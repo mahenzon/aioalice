@@ -1,11 +1,10 @@
 from attr import attrs, attrib
 
-from aioalice.utils import safe_kwargs, ensure_cls
-from aioalice.utils.helper import Helper, HelperMode, Item
 from . import AliceObject, Markup, NaturalLanguageUnderstanding
+from ..utils import ensure_cls
+from ..utils.helper import Helper, HelperMode, Item
 
 
-@safe_kwargs
 @attrs
 class Request(AliceObject):
     """Request object"""

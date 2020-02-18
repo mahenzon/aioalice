@@ -1,6 +1,7 @@
 from attr import attrs, attrib
-from aioalice.utils import ensure_cls
+
 from . import AliceObject, BaseSession, Response
+from ..utils import ensure_cls
 
 
 @attrs

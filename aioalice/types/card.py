@@ -1,8 +1,8 @@
 from attr import attrs, attrib
 
-from aioalice.utils import ensure_cls
-from aioalice.utils.helper import Helper, HelperMode, Item
 from . import AliceObject, MediaButton, Image, CardHeader, CardFooter
+from ..utils import ensure_cls
+from ..utils.helper import Helper, HelperMode, Item
 
 
 @attrs
@@ -31,7 +31,7 @@ class Card(AliceObject):
             "ItemsList" — с галереей из нескольких изображений
         """
         if value not in CardType.all():
-            raise ValueError(f'Card type must be "BigImage" or "ItemsList", not "{value}"')
+            raise ValueError(f'Card type must be "BigImage" or "ItemsList", not {value!r}')
 
     @classmethod
     def big_image(cls, image_id, title, description, button=None):

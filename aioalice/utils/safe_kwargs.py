@@ -1,4 +1,6 @@
-# https://gist.github.com/surik00/a6c2804a2d18a2ab75630bb5d93693c8
+"""
+https://gist.github.com/mahenzon/a6c2804a2d18a2ab75630bb5d93693c8
+"""
 
 import inspect
 import functools
