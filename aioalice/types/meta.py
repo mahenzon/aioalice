@@ -1,10 +1,9 @@
 from attr import attrs, attrib
 
-from aioalice.utils import safe_kwargs, ensure_cls
 from . import AliceObject, Interfaces
+from ..utils import ensure_cls
 
 
-@safe_kwargs
 @attrs
 class Meta(AliceObject):
     """Meta object"""

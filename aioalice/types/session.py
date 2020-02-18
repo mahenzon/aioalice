@@ -21,5 +21,5 @@ class Session(BaseSession):
         return BaseSession(
             self.session_id,
             self.message_id,
-            self.user_id
+            self.user_id,
         )

@@ -1,8 +1,8 @@
 from attr import attrs, attrib
 from aiohttp.web import Request as WebRequest
-from aioalice.utils import ensure_cls
 from . import AliceObject, Meta, Session, \
     Card, Request, Response, AliceResponse
+from ..utils import ensure_cls
 
 
 @attrs
@@ -18,7 +18,7 @@ class AliceRequest(AliceObject):
         return AliceResponse(
             response=response,
             session=self.session.base,
-            version=self.version
+            version=self.version,
         )
 
     def response(self, responose_or_text, **kwargs):
@@ -53,8 +53,9 @@ class AliceRequest(AliceObject):
         """
         return self._response(
             Response(
-                text, **kwargs,
+                text,
                 card=Card.big_image(image_id, title, description, button),
+                **kwargs,
             )
         )
 
@@ -71,7 +72,8 @@ class AliceRequest(AliceObject):
         """
         return self._response(
             Response(
-                text, **kwargs,
-                card=Card.items_list(header, items, footer)
+                text,
+                card=Card.items_list(header, items, footer),
+                **kwargs,
             )
         )
