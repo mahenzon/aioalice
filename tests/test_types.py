@@ -20,7 +20,7 @@ from _dataset import META, MARKUP, SESSION, \
     DATA_FROM_STATION, REQUEST_WITH_NLU, ENTITY_TOKEN, \
     ENTITY_VALUE, ENTITY, ENTITY_INTEGER, NLU, \
     PING_REQUEST_1, REQUEST_NEW_INTERFACES, REQUEST_WITH_EXTRA_KWARGS, \
-    REQUEST_W_EXTRA_KW_NEW
+    REQUEST_W_EXTRA_KW_NEW, YANDEX_ALICE_REQUEST_EXAMPLE
 
 
 TestAliceRequest = partial(types.AliceRequest, None)  # original_request: https://github.com/surik00/aioalice/pull/2/
@@ -357,3 +357,7 @@ class TestAliceTypes(unittest.TestCase):
         alice_request: types.AliceRequest = TestAliceRequest(**REQUEST_W_EXTRA_KW_NEW)
         self._test_alice_request(alice_request, REQUEST_W_EXTRA_KW_NEW)
         assert alice_request._raw_kwargs['state'] is REQUEST_W_EXTRA_KW_NEW['state']
+
+    def test_request_demo_example(self):
+        alice_request = TestAliceRequest(**YANDEX_ALICE_REQUEST_EXAMPLE)
+        self._test_alice_request(alice_request, YANDEX_ALICE_REQUEST_EXAMPLE)
