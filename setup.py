@@ -30,20 +30,9 @@ def get_description():
         return f.read()
 
 
-def get_requirements(filename=None):
-    """
-    Read requirements from 'requirements.txt'
-
-    :return: requirements
-    :rtype: list
-    """
-    if filename is None:
-        filename = 'requirements.txt'
-
-    file = WORK_DIR / filename
-
-    install_reqs = parse_requirements(str(file), session='hack')
-    return [str(ir.req) for ir in install_reqs]
+requirements_filepath = WORK_DIR / "requirements.txt"
+with open(requirements_filepath) as fp:
+    install_requires = fp.read()
 
 
 setup(
@@ -68,5 +57,5 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
     ],
-    install_requires=get_requirements()
+    install_requires=install_requires,
 )
