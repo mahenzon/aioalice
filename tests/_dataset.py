@@ -162,7 +162,6 @@ FOOTER = {
 CARD_TITLE = 'Заголовок'
 CARD_DESCR = 'Описание'
 
-
 EXPECTED_CARD_BIG_IMAGE_JSON = {
     "type": "BigImage",
     "image_id": IMAGE_ID,
@@ -402,6 +401,48 @@ REQUEST_WITH_EXTRA_KWARGS = {
         'new': True,
         'message_id': 0,
         'deploy_tokens': {},
+    },
+    'version': '1.0',
+}
+
+REQUEST_W_EXTRA_KW_NEW = {
+    'meta': {
+        'client_id': 'MailRu-VC/1.0',
+        'locale': 'ru_RU',
+        'timezone': 'Europe/Moscow',
+        'interfaces': {
+            'screen': {},
+        },
+        '_city_ru': 'Москва',
+    },
+    'request': {
+        'command': '',
+        'original_utterance': 'Включи навык абракадабра',
+        'type': 'SimpleUtterance',
+        'nlu': {
+            'tokens': ['включи',
+                       'навык',
+                       'абракадабра'],
+            'entities': [],
+        }
+    },
+    'session': {
+        'session_id': 'a6dcdc42-92b8-4076-9bae-fced146bb1b2',
+        'user_id': 'f67490185d2080870a55490310dcd14007ddad00eb330dd4e3356a8bac77d13f',
+        'skill_id': 'efe83b82-c63e-4035-afa4-80ebed0973c8',
+        'new': True,
+        'message_id': 0,
+        'user': {
+            'user_id': 'bfe750f47d3548c13d46fa35a461dcdb49c5ab340e6f62097a77b2e023c7a4af',
+        },
+        'application': {
+            'application_id': 'f67490185d2080870a55490310dcd14007ddad00eb330dd4e3356a8bac77d13f',
+            'application_type': 'mobile',
+        },
+    },
+    'state': {
+        'session': {},
+        'user': {},
     },
     'version': '1.0',
 }

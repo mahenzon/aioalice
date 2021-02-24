@@ -19,7 +19,8 @@ from _dataset import META, MARKUP, SESSION, \
     EXPECTED_ALICE_RESPONSE_ITEMS_LIST_WITH_BUTTON, \
     DATA_FROM_STATION, REQUEST_WITH_NLU, ENTITY_TOKEN, \
     ENTITY_VALUE, ENTITY, ENTITY_INTEGER, NLU, \
-    PING_REQUEST_1, REQUEST_NEW_INTERFACES, REQUEST_WITH_EXTRA_KWARGS
+    PING_REQUEST_1, REQUEST_NEW_INTERFACES, REQUEST_WITH_EXTRA_KWARGS, \
+    REQUEST_W_EXTRA_KW_NEW
 
 
 TestAliceRequest = partial(types.AliceRequest, None)  # original_request: https://github.com/surik00/aioalice/pull/2/
@@ -351,3 +352,8 @@ class TestAliceTypes(unittest.TestCase):
         self._test_alice_request(alice_request, REQUEST_WITH_EXTRA_KWARGS)
         assert alice_request.session._raw_kwargs['deploy_tokens'] is REQUEST_WITH_EXTRA_KWARGS['session']['deploy_tokens']
         assert alice_request.meta._raw_kwargs['_city_ru'] is REQUEST_WITH_EXTRA_KWARGS['meta']['_city_ru']
+
+    def test_model_inits_ok_with_extra_root_kwargs(self):
+        alice_request: types.AliceRequest = TestAliceRequest(**REQUEST_W_EXTRA_KW_NEW)
+        self._test_alice_request(alice_request, REQUEST_W_EXTRA_KW_NEW)
+        assert alice_request._raw_kwargs['state'] is REQUEST_W_EXTRA_KW_NEW['state']
