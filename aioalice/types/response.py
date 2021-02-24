@@ -10,6 +10,6 @@ class Response(AliceObject):
 
     text = attrib(type=str)
     tts = attrib(default=None, type=str)
-    card = attrib(default=None, convert=ensure_cls(Card))
-    buttons = attrib(default=None, convert=ensure_cls(Button))
+    card = attrib(default=None, converter=ensure_cls(Card))
+    buttons = attrib(default=None, converter=ensure_cls(Button))
     end_session = attrib(default=False, type=bool)

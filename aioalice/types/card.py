@@ -15,13 +15,13 @@ class Card(AliceObject):
     image_id = attrib(default=None, type=str)
     title = attrib(default=None, type=str)
     description = attrib(default=None, type=str)
-    button = attrib(default=None, convert=ensure_cls(MediaButton))
+    button = attrib(default=None, converter=ensure_cls(MediaButton))
 
     # for ItemsList
-    header = attrib(default=None, convert=ensure_cls(CardHeader))
-    items = attrib(default=None, convert=ensure_cls(Image))  # List of Image objects
+    header = attrib(default=None, converter=ensure_cls(CardHeader))
+    items = attrib(default=None, converter=ensure_cls(Image))  # List of Image objects
 
-    footer = attrib(default=None, convert=ensure_cls(CardFooter))
+    footer = attrib(default=None, converter=ensure_cls(CardFooter))
 
     @type.validator
     def check(self, attribute, value):

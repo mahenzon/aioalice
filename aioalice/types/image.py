@@ -10,4 +10,4 @@ class Image(AliceObject):
     image_id = attrib(type=str)
     title = attrib(type=str)
     description = attrib(type=str)
-    button = attrib(default=None, convert=ensure_cls(MediaButton))
+    button = attrib(default=None, converter=ensure_cls(MediaButton))

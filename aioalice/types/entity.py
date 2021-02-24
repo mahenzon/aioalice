@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 class Entity(AliceObject):
     """Entity object"""
     type = attrib(type=str)
-    tokens = attrib(convert=ensure_cls(EntityTokens))
+    tokens = attrib(converter=ensure_cls(EntityTokens))
     value = attrib(factory=dict)
 
     @type.validator

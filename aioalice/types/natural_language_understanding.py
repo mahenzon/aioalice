@@ -12,4 +12,4 @@ from aioalice.utils import ensure_cls
 class NaturalLanguageUnderstanding(AliceObject):
     """Natural Language Understanding object"""
     tokens = attrib(factory=list)
-    entities = attrib(factory=list, convert=ensure_cls(Entity))
+    entities = attrib(factory=list, converter=ensure_cls(Entity))

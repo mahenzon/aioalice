@@ -18,9 +18,9 @@ from aioalice.utils import ensure_cls, safe_kwargs
 class AliceRequest(AliceObject):
     """AliceRequest is a request from Alice API"""
     original_request = attrib(type=WebRequest)
-    meta = attrib(convert=ensure_cls(Meta))
-    request = attrib(convert=ensure_cls(Request))
-    session = attrib(convert=ensure_cls(Session))
+    meta = attrib(converter=ensure_cls(Meta))
+    request = attrib(converter=ensure_cls(Request))
+    session = attrib(converter=ensure_cls(Session))
     version = attrib(type=str)
 
     def _response(self, response):
