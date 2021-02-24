@@ -1,9 +1,11 @@
 import asyncio
 import logging
 import functools
+
 from aiohttp import web
-from ..utils import json, generate_json_payload
-from ..types import AliceRequest, AliceResponse, Response
+
+from aioalice.utils import json, generate_json_payload
+from aioalice.types import AliceRequest, AliceResponse, Response
 
 
 log = logging.getLogger(__name__)

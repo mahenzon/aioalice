@@ -1,7 +1,7 @@
 from attr import attrs, attrib
 
-from . import AliceObject, MediaButton
-from ..utils import ensure_cls
+from aioalice.types import AliceObject, MediaButton
+from aioalice.utils import ensure_cls
 
 
 @attrs

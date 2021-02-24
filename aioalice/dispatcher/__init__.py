@@ -1,21 +1,18 @@
 import aiohttp
 import asyncio
-# import logging
 
-from . import api
-from .handler import Handler, SkipHandler
-from .storage import DisabledStorage, MemoryStorage, DEFAULT_STATE
-from .filters import generate_default_filters, ExceptionsFilter
-from ..utils import json, exceptions
-
-from ..types import UploadedImage, Quota
-# log = logging.getLogger(__name__)
+from aioalice.dispatcher import api
+from aioalice.dispatcher.handler import Handler, SkipHandler
+from aioalice.dispatcher.storage import DisabledStorage, MemoryStorage, DEFAULT_STATE
+from aioalice.dispatcher.filters import generate_default_filters, ExceptionsFilter
+from aioalice.utils import json, exceptions
+from aioalice.types import UploadedImage, Quota
 
 
 class Dispatcher:
 
     def __init__(self, loop=None, storage=None, *, skill_id=None, oauth_token=None):
-        # TODO: inculde default handler for 'test' commands
+        # TODO: include default handler for 'test' commands
         # TODO: create default handler for exceptions handler
         self.loop = loop or asyncio.get_event_loop()
         self.storage = storage or DisabledStorage()
@@ -165,7 +162,7 @@ class Dispatcher:
         return skill_id, oauth_token
 
     async def get_images(self, skill_id=None, oauth_token=None):
-        '''
+        """
         Get uploaded images
 
         :param skill_id: Provide if was not set at the Dispatcher init
@@ -174,7 +171,7 @@ class Dispatcher:
         :type oauth_token: :obj:`str`
 
         :return: list of UploadedImage instances
-        '''
+        """
         skill_id, oauth_token = self._check_auth(skill_id, oauth_token)
         result = await api.request(
             self.session, oauth_token, skill_id,
@@ -185,7 +182,7 @@ class Dispatcher:
         return [UploadedImage(**dct) for dct in result['images']]
 
     async def upload_image(self, image_url_or_bytes, skill_id=None, oauth_token=None):
-        '''
+        """
         Upload image by either url or bytes
 
         :param image_url_or_bytes: Image URL or bytes
@@ -196,7 +193,7 @@ class Dispatcher:
         :type oauth_token: :obj:`str`
 
         :return: UploadedImage
-        '''
+        """
         skill_id, oauth_token = self._check_auth(skill_id, oauth_token)
         json = None
         file = None
@@ -213,14 +210,14 @@ class Dispatcher:
         return UploadedImage(**result['image'])
 
     async def get_images_quota(self, oauth_token=None):
-        '''
+        """
         Get images storage quota
 
         :param oauth_token: Provide if was not set at the Dispatcher init
         :type oauth_token: :obj:`str`
 
         :return: Quota
-        '''
+        """
         oauth_token = oauth_token or self.oauth_token
         if oauth_token is None:
             raise exceptions.AuthRequired('Please provide oauth_token')
@@ -234,7 +231,7 @@ class Dispatcher:
         return Quota(**result['images']['quota'])
 
     async def delete_image(self, image_id, skill_id=None, oauth_token=None):
-        '''
+        """
         Delete image by id
 
         :param image_id: Image id to be deleted
@@ -245,7 +242,7 @@ class Dispatcher:
         :type oauth_token: :obj:`str`
 
         :return: True if result is ok
-        '''
+        """
         skill_id, oauth_token = self._check_auth(skill_id, oauth_token)
         url = api.Methods.api_url(skill_id, api.Methods.IMAGES) + image_id
         result = await api.request(

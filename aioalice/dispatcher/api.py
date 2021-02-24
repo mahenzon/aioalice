@@ -2,8 +2,8 @@ import aiohttp
 import logging
 from http import HTTPStatus
 
-from ..utils import json, exceptions
-from ..utils.helper import Helper, HelperMode, Item
+from aioalice.utils import json, exceptions
+from aioalice.utils.helper import Helper, HelperMode, Item
 
 BASE_URL = 'https://dialogs.yandex.net/api/v1/'
 API_URL = BASE_URL + 'skills/{skill_id}/{method}/'

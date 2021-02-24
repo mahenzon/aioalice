@@ -1,8 +1,8 @@
 from attr import attrs, attrib
 
-from . import AliceObject, MediaButton, Image, CardHeader, CardFooter
-from ..utils import ensure_cls
-from ..utils.helper import Helper, HelperMode, Item
+from aioalice.types import AliceObject, MediaButton, Image, CardHeader, CardFooter
+from aioalice.utils import ensure_cls
+from aioalice.utils.helper import Helper, HelperMode, Item
 
 
 @attrs

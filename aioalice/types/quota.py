@@ -1,5 +1,6 @@
 from attr import attrs, attrib
-from . import AliceObject
+
+from aioalice.types import AliceObject
 
 
 @attrs

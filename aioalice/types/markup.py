@@ -1,7 +1,7 @@
 from attr import attrs, attrib
 
-from . import AliceObject
-from ..utils import safe_kwargs
+from aioalice.types import AliceObject
+from aioalice.utils import safe_kwargs
 
 
 @safe_kwargs
