@@ -1,2 +1,2 @@
 aiohttp>=3.3.2
-attrs==18.1.0
+attrs==20.3.0

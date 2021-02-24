@@ -10,5 +10,5 @@ class Meta(AliceObject):
     locale = attrib(type=str)
     timezone = attrib(type=str)
     client_id = attrib(type=str)
-    interfaces = attrib(default=None, convert=ensure_cls(Interfaces))
+    interfaces = attrib(default=None, converter=ensure_cls(Interfaces))
     flags = attrib(factory=list)

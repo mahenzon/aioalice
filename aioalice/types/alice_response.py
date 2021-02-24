@@ -8,6 +8,6 @@ from aioalice.utils import ensure_cls
 class AliceResponse(AliceObject):
     """AliceResponse is a response to Alice API"""
 
-    response = attrib(convert=ensure_cls(Response))
-    session = attrib(convert=ensure_cls(BaseSession))
+    response = attrib(converter=ensure_cls(Response))
+    session = attrib(converter=ensure_cls(BaseSession))
     version = attrib(type=str)
