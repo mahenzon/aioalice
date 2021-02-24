@@ -21,12 +21,12 @@ __version__ = '1.3.0'
 
 def get_description():
     """
-    Read full description from 'README-pypa.md'
+    Read full description from 'README-PyPI.md'
 
     :return: description
     :rtype: str
     """
-    with open('README-pypa.md', 'r', encoding='utf-8') as f:
+    with open('README-PyPI.md', 'r', encoding='utf-8') as f:
         return f.read()
 
 
