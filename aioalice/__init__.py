@@ -1,7 +1,7 @@
 import asyncio
 
-from .dispatcher import Dispatcher
-from .dispatcher.webhook import get_new_configured_app, configure_app
+from aioalice.dispatcher import Dispatcher
+from aioalice.dispatcher.webhook import get_new_configured_app, configure_app
 
 try:
     import uvloop
@@ -11,4 +11,4 @@ else:
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 
-__version__ = '1.3.0'
+__version__ = '1.4.0'

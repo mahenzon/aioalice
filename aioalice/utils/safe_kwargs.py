@@ -7,7 +7,7 @@ from inspect import isclass, getfullargspec
 
 
 def safe_kwargs(func_or_class):
-    from ..types.base import AliceObject
+    from aioalice.types.base import AliceObject
 
     spec = getfullargspec(func_or_class)
     all_args = spec.args

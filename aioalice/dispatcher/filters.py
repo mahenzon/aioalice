@@ -2,7 +2,7 @@ import re
 import inspect
 import logging
 
-from ..utils.helper import Helper, HelperMode, Item
+from aioalice.utils.helper import Helper, HelperMode, Item
 
 log = logging.getLogger(__name__)
 

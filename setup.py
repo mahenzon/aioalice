@@ -16,17 +16,17 @@ MINIMAL_PY_VERSION = (3, 6)
 if sys.version_info < MINIMAL_PY_VERSION:
     raise RuntimeError('aioAlice works only with Python {}+'.format('.'.join(map(str, MINIMAL_PY_VERSION))))
 
-__version__ = '1.3.0'
+__version__ = '1.4.0'
 
 
 def get_description():
     """
-    Read full description from 'README-pypa.md'
+    Read full description from 'README-PyPI.md'
 
     :return: description
     :rtype: str
     """
-    with open('README-pypa.md', 'r', encoding='utf-8') as f:
+    with open('README-PyPI.md', 'r', encoding='utf-8') as f:
         return f.read()
 
 

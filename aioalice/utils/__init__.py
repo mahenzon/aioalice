@@ -1,11 +1,11 @@
-from . import exceptions
-from .json import json
-from .payload import generate_json_payload
-from .safe_kwargs import safe_kwargs
+from aioalice.utils import exceptions
+from aioalice.utils.json import json
+from aioalice.utils.payload import generate_json_payload
+from aioalice.utils.safe_kwargs import safe_kwargs
 
 
 def ensure_cls(klass):
-    from ..types.base import AliceObject
+    from aioalice.types.base import AliceObject
     safe_cls = safe_kwargs(klass) if issubclass(klass, AliceObject) else klass
 
     def converter(val):

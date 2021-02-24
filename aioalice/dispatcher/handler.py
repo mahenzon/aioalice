@@ -1,4 +1,4 @@
-from .filters import check_filters
+from aioalice.dispatcher.filters import check_filters
 
 
 class SkipHandler(BaseException):

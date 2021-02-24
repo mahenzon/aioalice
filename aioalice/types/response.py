@@ -1,7 +1,7 @@
 from attr import attrs, attrib
 
-from . import AliceObject, Card, Button
-from ..utils import ensure_cls
+from aioalice.types import AliceObject, Card, Button
+from aioalice.utils import ensure_cls
 
 
 @attrs

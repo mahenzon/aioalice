@@ -4,8 +4,8 @@ Natural Language Understanding: https://medium.com/@lola.com/nlp-vs-nlu-whats-th
 
 from attr import attrs, attrib
 
-from . import AliceObject, Entity
-from ..utils import ensure_cls
+from aioalice.types import AliceObject, Entity
+from aioalice.utils import ensure_cls
 
 
 @attrs

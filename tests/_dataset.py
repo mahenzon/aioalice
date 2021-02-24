@@ -1,6 +1,5 @@
 from copy import deepcopy
 
-
 META = {
     "locale": "ru-RU",
     "timezone": "Europe/Moscow",
@@ -162,7 +161,6 @@ FOOTER = {
 CARD_TITLE = 'Заголовок'
 CARD_DESCR = 'Описание'
 
-
 EXPECTED_CARD_BIG_IMAGE_JSON = {
     "type": "BigImage",
     "image_id": IMAGE_ID,
@@ -171,14 +169,12 @@ EXPECTED_CARD_BIG_IMAGE_JSON = {
     "button": deepcopy(MEDIA_BUTTON),
 }
 
-
 EXPECTED_CARD_ITEMS_LIST_JSON = {
     "type": "ItemsList",
     "header": {"text": CARD_HEADER_TEXT},
     "items": [deepcopy(IMAGE)],
     "footer": deepcopy(FOOTER),
 }
-
 
 EXPECTED_ALICE_RESPONSE_BIG_IMAGE_WITH_BUTTON = {
     "response": {
@@ -201,7 +197,6 @@ EXPECTED_ALICE_RESPONSE_ITEMS_LIST_WITH_BUTTON = {
     "session": BASE_SESSION,
     "version": "1.0"
 }
-
 
 DATA_FROM_STATION = {
     'meta': {
@@ -375,7 +370,6 @@ REQUEST_NEW_INTERFACES = {
     'version': '1.0'
 }
 
-
 REQUEST_WITH_EXTRA_KWARGS = {
     'meta': {
         'client_id': 'JS/1.0',
@@ -404,4 +398,137 @@ REQUEST_WITH_EXTRA_KWARGS = {
         'deploy_tokens': {},
     },
     'version': '1.0',
+}
+
+REQUEST_W_EXTRA_KW_NEW = {
+    'meta': {
+        'client_id': 'MailRu-VC/1.0',
+        'locale': 'ru_RU',
+        'timezone': 'Europe/Moscow',
+        'interfaces': {
+            'screen': {},
+        },
+        '_city_ru': 'Москва',
+    },
+    'request': {
+        'command': '',
+        'original_utterance': 'Включи навык абракадабра',
+        'type': 'SimpleUtterance',
+        'nlu': {
+            'tokens': ['включи',
+                       'навык',
+                       'абракадабра'],
+            'entities': [],
+        }
+    },
+    'session': {
+        'session_id': 'a6dcdc42-92b8-4076-9bae-fced146bb1b2',
+        'user_id': 'f67490185d2080870a55490310dcd14007ddad00eb330dd4e3356a8bac77d13f',
+        'skill_id': 'efe83b82-c63e-4035-afa4-80ebed0973c8',
+        'new': True,
+        'message_id': 0,
+        'user': {
+            'user_id': 'bfe750f47d3548c13d46fa35a461dcdb49c5ab340e6f62097a77b2e023c7a4af',
+        },
+        'application': {
+            'application_id': 'f67490185d2080870a55490310dcd14007ddad00eb330dd4e3356a8bac77d13f',
+            'application_type': 'mobile',
+        },
+    },
+    'state': {
+        'session': {},
+        'user': {},
+    },
+    'version': '1.0',
+}
+
+YANDEX_ALICE_REQUEST_EXAMPLE = {
+  "meta": {
+    "locale": "ru-RU",
+    "timezone": "Europe/Moscow",
+    "client_id": "ru.yandex.searchplugin/5.80 (Samsung Galaxy; Android 4.4)",
+    "interfaces": {
+      "screen": {},
+      "account_linking": {}
+    }
+  },
+  "request": {
+    "command": "закажи пиццу на улицу льва толстого 16 на завтра",
+    "original_utterance": "закажи пиццу на улицу льва толстого, 16 на завтра",
+    "type": "SimpleUtterance",
+    "markup": {
+      "dangerous_context": True
+    },
+    "payload": {},
+    "nlu": {
+      "tokens": [
+        "закажи",
+        "пиццу",
+        "на",
+        "льва",
+        "толстого",
+        "16",
+        "на",
+        "завтра"
+      ],
+      "entities": [
+        {
+          "tokens": {
+            "start": 2,
+            "end": 6
+          },
+          "type": "YANDEX.GEO",
+          "value": {
+            "house_number": "16",
+            "street": "льва толстого"
+          }
+        },
+        {
+          "tokens": {
+            "start": 3,
+            "end": 5
+          },
+          "type": "YANDEX.FIO",
+          "value": {
+            "first_name": "лев",
+            "last_name": "толстой"
+          }
+        },
+        {
+          "tokens": {
+            "start": 5,
+            "end": 6
+          },
+          "type": "YANDEX.NUMBER",
+          "value": 16
+        },
+        {
+          "tokens": {
+            "start": 6,
+            "end": 8
+          },
+          "type": "YANDEX.DATETIME",
+          "value": {
+            "day": 1,
+            "day_is_relative": True
+          }
+        }
+      ]
+    }
+  },
+  "session": {
+    "message_id": 0,
+    "session_id": "2eac4854-fce721f3-b845abba-20d60",
+    "skill_id": "3ad36498-f5rd-4079-a14b-788652932056",
+    "user_id": "47C73714B580ED2469056E71081159529FFC676A4E5B059D629A819E857DC2F8",
+    "user": {
+      "user_id": "6C91DA5198D1758C6A9F63A7C5CDDF09359F683B13A18A151FBF4C8B092BB0C2",
+      "access_token": "AgAAAAAB4vpbAAApoR1oaCd5yR6eiXSHqOGT8dT"
+    },
+    "application": {
+      "application_id": "47C73714B580ED2469056E71081159529FFC676A4E5B059D629A819E857DC2F8"
+    },
+    "new": True
+  },
+  "version": "1.0"
 }

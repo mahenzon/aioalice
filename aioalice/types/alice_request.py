@@ -1,10 +1,19 @@
 from attr import attrs, attrib
 from aiohttp.web import Request as WebRequest
-from . import AliceObject, Meta, Session, \
-    Card, Request, Response, AliceResponse
-from ..utils import ensure_cls
+
+from aioalice.types import (
+    AliceObject,
+    Meta,
+    Session,
+    Card,
+    Request,
+    Response,
+    AliceResponse,
+)
+from aioalice.utils import ensure_cls, safe_kwargs
 
 
+@safe_kwargs
 @attrs
 class AliceRequest(AliceObject):
     """AliceRequest is a request from Alice API"""
