@@ -87,6 +87,9 @@ ALICE_RESPONSE = {
         "end_session": False
     },
     "session": BASE_SESSION,
+    "session_state": {},
+    "user_state_update": {},
+    "application_state": {},
     "version": "1.0"
 }
 
@@ -113,6 +116,9 @@ EXPECTED_RESPONSE = {
         "end_session": False
     },
     "session": BASE_SESSION,
+    "session_state": {},
+    "user_state_update": {},
+    "application_state": {},
     "version": "1.0"
 }
 
@@ -184,6 +190,9 @@ EXPECTED_ALICE_RESPONSE_BIG_IMAGE_WITH_BUTTON = {
         "end_session": False
     },
     "session": BASE_SESSION,
+    "session_state": {},
+    "user_state_update": {},
+    "application_state": {},
     "version": "1.0"
 }
 
@@ -195,6 +204,9 @@ EXPECTED_ALICE_RESPONSE_ITEMS_LIST_WITH_BUTTON = {
         "end_session": False
     },
     "session": BASE_SESSION,
+    "session_state": {},
+    "user_state_update": {},
+    "application_state": {},
     "version": "1.0"
 }
 
@@ -219,6 +231,9 @@ DATA_FROM_STATION = {
         'skill_id': '94d16-a32f-4932-9f5e-354d31f71998',
         'user_id': 'CFC516B0EC123B86C78532BCEC1C33CBF05D54EF15C8001B52628EF49F580'
     },
+    "session_state": {},
+    "user_state_update": {},
+    "application_state": {},
     'version': '1.0'
 }
 
