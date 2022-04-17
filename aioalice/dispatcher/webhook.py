@@ -1,11 +1,22 @@
 import asyncio
 import logging
 import functools
+import sys
+from typing import TYPE_CHECKING
 
 from aiohttp import web
 
 from aioalice.utils import json, generate_json_payload
 from aioalice.types import AliceRequest, AliceResponse, Response
+
+if sys.version_info >= (3, 7):
+    from asyncio import CancelledError
+else:
+    from asyncio.futures import CancelledError
+
+
+if TYPE_CHECKING:
+    from aioalice import Dispatcher
 
 
 log = logging.getLogger(__name__)
@@ -46,7 +57,7 @@ class WebhookRequestHandler(web.View):
 
     """
 
-    def get_dispatcher(self):
+    def get_dispatcher(self) -> "Dispatcher":
         """
         Get Dispatcher instance from environment
         """
@@ -74,7 +85,7 @@ class WebhookRequestHandler(web.View):
         :param request:
         :return:
         """
-        dispatcher = self.get_dispatcher()
+        dispatcher: "Dispatcher" = self.get_dispatcher()
         loop = dispatcher.loop
 
         # Analog of `asyncio.wait_for` but without cancelling task
@@ -88,7 +99,7 @@ class WebhookRequestHandler(web.View):
         try:
             try:
                 await waiter
-            except asyncio.futures.CancelledError:
+            except CancelledError:
                 fut.remove_done_callback(done_cb)
                 fut.cancel()
                 raise
